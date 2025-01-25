@@ -8,6 +8,8 @@ public class MapController : MonoBehaviour
     private const float MAP_LIFE_SECONDS = 300;
     private const float MAP_MIN_LIFE = 20;
     private const int VALVE_LIFE = 10;
+    private const int MAX_TIME_UNTIL_NEXT_BUBBLE_SPAWNER = 45;
+    private const int MIN_TIME_UNTIL_NEXT_BUBBLE_SPAWNER = 15;
 
     public LineRenderer mapBorderLineRenderer;
     public float mapLife = 100;
@@ -21,17 +23,13 @@ public class MapController : MonoBehaviour
     private bool isAscending = false;
     private List<Vector2> colliderPath = new List<Vector2>();
 
+    public float remainingTimeUntilNextBubbleSpawner;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         DrawBorders();
-        bubbleSpawnPoints.Add(GetRandomSpawnPointOnFloor());
-
-        foreach (var point in bubbleSpawnPoints)
-		{
-            Instantiate(bubbleSpawnerPrefab, point, new Quaternion());
-		}
-        //polygonCollider.SetPath(0, colliderPath);
+        SetRemainingTimeBubbleSpawner();
     }
 
     // Update is called once per frame
@@ -48,6 +46,17 @@ public class MapController : MonoBehaviour
 		{
             Ascend();
         }
+
+        if (remainingTimeUntilNextBubbleSpawner > 0f)
+		{
+            remainingTimeUntilNextBubbleSpawner -= Time.deltaTime;
+		}
+        else
+		{
+            SpawnBubbleSpawner();
+            SetRemainingTimeBubbleSpawner();
+		}
+
         if (isAscending)
 		{
             transform.position = new Vector3(transform.position.x, transform.position.y + 0.001f);
@@ -66,7 +75,6 @@ public class MapController : MonoBehaviour
         var radius = GetRadius();
 
         colliderPath.Clear();
-        //polygonCollider.pathCount = MAP_BORDER_STEP / 2 + 1;
 
         mapBorderLineRenderer.positionCount = MAP_BORDER_STEP / 2 + 1;
         int currentStep;
@@ -130,5 +138,20 @@ public class MapController : MonoBehaviour
     public float GetWidth()
 	{
         return mapBorderLineRenderer.startWidth;
+	}
+
+    private void SpawnBubbleSpawner()
+	{
+        Instantiate(bubbleSpawnerPrefab, GetRandomSpawnPointOnFloor(), new Quaternion());
+    }
+
+    private void SetRemainingTimeBubbleSpawner()
+	{
+        remainingTimeUntilNextBubbleSpawner = Random.Range(MIN_TIME_UNTIL_NEXT_BUBBLE_SPAWNER, MAX_TIME_UNTIL_NEXT_BUBBLE_SPAWNER);
+    }
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		// TODO: TREAT COLLISION
 	}
 }

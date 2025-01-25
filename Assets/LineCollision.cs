@@ -18,9 +18,6 @@ public class LineCollision : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        /*colliderPoints = CalculateColliderPoints();
-        polygonCollider2D.SetPath(0, colliderPoints.ConvertAll(p => (Vector2)transform.InverseTransformPoint(p));*/
-
         Vector3[] positions = mapController.GetPositions();
         if (positions.Length >= 2)
 		{
