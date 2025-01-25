@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour
 {
-
     [Header("Enemy stats")]
     [SerializeField] private float life;
     [SerializeField] private float speed;
@@ -13,14 +12,14 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] private float hitWallDistance;
     [SerializeField] private float hitHoleDistance;
     [SerializeField] private float hitHoleDistanceFromPlayer;
-    [SerializeField] private Rigidbody2D enemyRB;
     [SerializeField] private LayerMask wallLayer;
 
+    private Rigidbody2D enemyRB;
     private bool moveRight = true;
 
     private void Update()
     {
-        enemyRB.linearVelocity = new Vector2(speed, 0);
+       
     }
 
     private void TurnAroundHitWall()
