@@ -926,8 +926,11 @@ MonoBehaviour:
   jetpackHealthConsumption: 10
   projectilePrefabs:
   - {fileID: 4955346010784818212, guid: e2d10feeee08ff946a3d82af4a506d32, type: 3}
-  - {fileID: 4955346010784818212, guid: 0e3e816c1025efd4599d03aecbe85878, type: 3}
+  - {fileID: 4955346010784818212, guid: cfd309827f787d44f993a85a461c5cae, type: 3}
   poolSize: 10
+  dashSpeed: 15
+  dashDuration: 0.2
+  dashCooldown: 1
 --- !u!58 &711344759
 CircleCollider2D:
   m_ObjectHideFlags: 0
