@@ -278,14 +278,14 @@ public class CharacterController2D : MonoBehaviour {
   }
 
   private void OnCollisionStay2D(Collision2D collision) {
-    if(collision.gameObject.CompareTag("Ground")) {
+    if(collision.gameObject.CompareTag("Ground") && rb.linearVelocity.y <= 0) {
       isGrounded = true;
       canUseJetpack = false; // Disable jetpack when grounded
     }
   }
 
   private void OnCollisionExit2D(Collision2D collision) {
-    if(collision.gameObject.CompareTag("Ground") && rb.linearVelocity.y <= 0) {
+    if(collision.gameObject.CompareTag("Ground")) {
       isGrounded = false;
     }
   }
