@@ -24,22 +24,16 @@ public class HookEnemy : MonoBehaviour
     private void Update()
     {
         distancePlayer = Vector2.Distance(transform.position, player.transform.position);
-        boid.TargetPlayer();
         if (distancePlayer > attackDistance)
         {
-            Chase();
+            boid.TargetPlayer();
+            boid.Seek();
         }
         else
         {
             Attack();
         }
     }
-
-    private void FixedUpdate()
-    {
-        boid.Seek();
-    }
-
     private void Attack()
     {
         Debug.Log("Attack");
@@ -58,10 +52,5 @@ public class HookEnemy : MonoBehaviour
     {
         Debug.Log("Death");
         this.gameObject.SetActive(false);
-    }
-
-    private void Chase()
-    {
-        boid.Seek();
     }
 }
