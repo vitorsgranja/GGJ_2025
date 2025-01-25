@@ -9,8 +9,8 @@ public class CharacterController2D : MonoBehaviour {
   public float shootHealthConsumption = 5f;
   public Transform firePoint;
   public Transform projectileParent; // Parent for pooled projectiles
-  public Color baseColor = Color.white;
-  public Color secondaryWeaponColor = Color.red;
+  public Color baseColor = Color.blue;
+  public Color secondaryWeaponColor = Color.magenta;
 
   [Header("Jump Settings")]
   public float initialJumpForce = 5;
@@ -61,7 +61,7 @@ public class CharacterController2D : MonoBehaviour {
     HandleShooting();
     HandleWeaponSwitching();
     HandleDash();
-    HandleFirePointRotation();
+    HandleMouseFunctions();
     UpdatePlayerSize();
     UpdatePlayerColor();
   }
@@ -195,16 +195,44 @@ public class CharacterController2D : MonoBehaviour {
     canDash = true;
   }
 
-  private void HandleFirePointRotation() {
-    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    Vector2 direction = (mousePosition - transform.position).normalized;
-    firePoint.right = direction;
 
-    if(firePoint.localScale.x < 0) {
-      firePoint.localScale = new Vector3(firePoint.localScale.x * -1,firePoint.localScale.y,firePoint.localScale.z);
-    }
+
+
+  #region MousePosition
+  private void HandleMouseFunctions() {
+    // Captura a posição do mouse na tela
+    Vector3 mousePosition = Input.mousePosition;
+    mousePosition.z = 10f; // Ajuste a posição Z para um valor que esteja no plano 2D correto
+                           // Converte a posição do mouse para o espaço mundial
+    Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+    FirePointRotation(worldMousePosition);
+    PlayerSpritFlipping(worldMousePosition);
   }
 
+  private void FirePointRotation(Vector3 mousePos) {
+    // Calcula a direção entre o firePoint e o mouse
+    Vector2 direction = (mousePos - firePoint.position).normalized;
+    // Calcula o ângulo da direção e aplica a rotação no firePoint
+    float angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
+    firePoint.rotation = Quaternion.Euler(new Vector3(0,0,angle));
+  }
+
+  private void PlayerSpritFlipping(Vector3 mousePos) {
+    // Verifica a posição do mouse em relação ao firePoint (ou ao personagem)
+    if(mousePos.x < transform.position.x) {
+      // Se o mouse estiver à esquerda do personagem, inverte o sprite
+      spriteRenderer.flipX = true;
+      // Se o mouse estiver à esquerda do personagem, inverte o firePoint
+      firePoint.transform.localPosition = new Vector3(-0.1f,0,0);
+    } else {
+      // Se o mouse estiver à direita, o sprite não é invertido
+      spriteRenderer.flipX = false;
+      // Se o mouse estiver à esquerda do personagem, inverte o firePoint
+      firePoint.transform.localPosition = new Vector3(0.1f,0,0);
+
+    }
+  }
+  #endregion
   private void ConsumeHealth(float amount) {
     currentHealth -= amount;
     currentHealth = Mathf.Clamp(currentHealth,0,maxHealth);
@@ -257,7 +285,7 @@ public class CharacterController2D : MonoBehaviour {
   }
 
   private void OnCollisionExit2D(Collision2D collision) {
-    if(collision.gameObject.CompareTag("Ground")) {
+    if(collision.gameObject.CompareTag("Ground") && rb.linearVelocity.y <= 0) {
       isGrounded = false;
     }
   }
