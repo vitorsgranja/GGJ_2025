@@ -56,6 +56,15 @@ public class CharacterController2D : MonoBehaviour {
     UpdatePlayerColor();
   }
 
+  public void AddLife(float life) {
+    currentHealth += life;
+    if (currentHealth > maxHealth) {
+      currentHealth = maxHealth;
+    } else if(currentHealth <= 0) {
+      Die();
+    }
+  }
+
   private void InitializeProjectilePools() {
     foreach(var prefab in projectilePrefabs) {
       Queue<GameObject> pool = new Queue<GameObject>();
@@ -244,7 +253,7 @@ public class CharacterController2D : MonoBehaviour {
   }
 
   private void OnCollisionStay2D(Collision2D collision) {
-    if(collision.gameObject.CompareTag("Ground")) {
+    if(collision.gameObject.CompareTag("Ground") && rb.linearVelocity.y <= 0) {
       isGrounded = true;
       canUseJetpack = false; // Disable jetpack when grounded
     }
