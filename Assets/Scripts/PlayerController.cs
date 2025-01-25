@@ -1,15 +1,23 @@
 using UnityEngine;
+using System.Collections;
 
 public class CharacterController2D : MonoBehaviour {
   [Header("Player Settings")]
   public float moveSpeed = 5f;
-  public float jumpForce = 100f;
-  public float jetpackForce = 10f;
   public float maxHealth = 100f;
-  public float jetpackHealthConsumption = 10f;
   public float shootHealthConsumption = 5f;
   public Transform firePoint;
   public GameObject bubbleProjectile;
+
+  [Header("Jump Settings")]
+  public float initialJumpForce = 5;
+  public float floatyGravityScale = 0.4f;
+  public float fastFallMultiplier = 0.7f;
+
+  [Header("Jetpack Settings")]
+  public float jetpackForce = 0.3f;
+  public float maxUpwardVelocity = 10f;
+  public float jetpackHealthConsumption = 10f;
 
   [Header("Weapon Settings")]
   public GameObject[] weapons;
@@ -18,7 +26,10 @@ public class CharacterController2D : MonoBehaviour {
   private Animator animator;
   private float currentHealth;
   private bool isGrounded;
+  private bool isJumping;
   private int currentWeaponIndex = 0;
+  private bool canUseJetpack = false;
+
 
   private void Start() {
     rb = GetComponent<Rigidbody2D>();
@@ -46,20 +57,43 @@ public class CharacterController2D : MonoBehaviour {
 
   private void HandleJumpAndJetpack() {
     if(Input.GetButtonDown("Jump") && isGrounded) {
-      rb.linearVelocity = new Vector2(rb.linearVelocity.x,jumpForce);
+      isGrounded = false;
+      isJumping = true;
+      rb.linearVelocity = new Vector2(rb.linearVelocity.x,initialJumpForce);
+      StartCoroutine(EnableJetpackAfterDelay());
     }
 
-    if(Input.GetButton("Jump") && !isGrounded && currentHealth > 0) {
-      rb.AddForce(Vector2.up * jetpackForce);
+    if(isJumping) {
+      if(rb.linearVelocity.y > 0) {
+        rb.gravityScale = floatyGravityScale;
+      } else if(rb.linearVelocity.y < 0) {
+        rb.gravityScale = fastFallMultiplier;
+        isJumping = false;
+      }
+    } else {
+      rb.gravityScale = 0.5f; // Normal gravity scale
+    }
+
+    if(Input.GetButton("Jump") && canUseJetpack && currentHealth > 0) {
+      Debug.Log("JETPACK!");
+      rb.AddForce(Vector2.up * jetpackForce * rb.gravityScale);
+      if(rb.linearVelocity.y > maxUpwardVelocity) {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x,maxUpwardVelocity);
+      }
       ConsumeHealth(jetpackHealthConsumption * Time.deltaTime);
     }
   }
-
-  private void HandleShooting() {
-    if(Input.GetButtonDown("Fire1") && currentHealth > shootHealthConsumption) {
-      Instantiate(bubbleProjectile,firePoint.position,firePoint.rotation);
-      ConsumeHealth(shootHealthConsumption);
+  private IEnumerator EnableJetpackAfterDelay() {
+    yield return new WaitForSeconds(0.4f);
+    if(!isGrounded) {
+      canUseJetpack = true;
     }
+  }
+  private void HandleShooting() {
+    //if(Input.GetButtonDown("Fire1") && currentHealth > shootHealthConsumption) {
+    //  Instantiate(bubbleProjectile,firePoint.position,firePoint.rotation);
+    //  ConsumeHealth(shootHealthConsumption);
+    //}
   }
 
   private void HandleWeaponSwitching() {
@@ -104,6 +138,7 @@ public class CharacterController2D : MonoBehaviour {
   private void OnCollisionStay2D(Collision2D collision) {
     if(collision.gameObject.CompareTag("Ground")) {
       isGrounded = true;
+      canUseJetpack = false; // Disable jetpack when grounded
     }
   }
 
