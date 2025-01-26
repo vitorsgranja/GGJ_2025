@@ -1,0 +1,912 @@
+fileFormatVersion: 2
+guid: 048900cf51122e8428b0cf5c59735f44
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 150
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_0"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 817
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14594d4cda2efb94ea0e99191c9b4f1e
+      internalID: -1024822729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_1"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 654
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb668cdbad573a4439706555f05b4439
+      internalID: 844188417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_2"
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 654
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0390c3c6f4224304ea1bfd56c7a5f0ac
+      internalID: 790086021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_3"
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 654
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f68153aad761c0b4199cfb16b841f590
+      internalID: -838507424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_4"
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 654
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32900e73835785048940c467f585e63d
+      internalID: -1020886096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_5"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 491
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0705b505cd6cadf44aacd895aab554c6
+      internalID: 215765330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_6"
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 491
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7a285abe92e3ab489de02a6bbde5635
+      internalID: -368061174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_7"
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 491
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae4bdc9f21dabe743a9772c9872db36d
+      internalID: 1634234255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_8"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 328
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb43dfbeb5b3c184fb57584de289ab76
+      internalID: 1563778282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_9"
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 328
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c17aacfe0a4bb3b4d8e5f5277815c93d
+      internalID: 537103770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_10"
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 328
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dbafdf5d99910b40aa5a2bd857e2d5d
+      internalID: 561097502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_11"
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 328
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e5ec9a8b313e734da454b93f0a227b5
+      internalID: 954942534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_12"
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 328
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c64461479d8f77e42a75f6045fbf6aa9
+      internalID: -1663303918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_13"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 165
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f2d726c44bd006429bae55977afc1d6
+      internalID: 1500183856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_14"
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 165
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3582b659464d9e244837aab717f15a05
+      internalID: -2097575194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_15"
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 165
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08a5490b63f859b46a0757627c6553d6
+      internalID: 1981516415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_16"
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 165
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 886a9ddd1f1ce344fb081ff4517c4652
+      internalID: 78025511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_17"
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 165
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67dbddc2fc542c94d8d8aff9106bfcc4
+      internalID: -2024940623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_18"
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 165
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4edcd35c63727fc4497b384e81a8e22d
+      internalID: -773706034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_19"
+      rect:
+        serializedVersion: 2
+        x: 966
+        y: 165
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54c3dbd0ded71194ca8c95599cc5099d
+      internalID: 1547086809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_20"
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 165
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5aff9ac4cd4c6742a6da99a6279abfc
+      internalID: -1294591254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_21"
+      rect:
+        serializedVersion: 2
+        x: 1288
+        y: 165
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd7afa2c4020c154eb633ae9f5910ba6
+      internalID: -1693263346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_22"
+      rect:
+        serializedVersion: 2
+        x: 1449
+        y: 165
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76bb79bbca79fd54d94bc8974c6e3d96
+      internalID: -289609350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_23"
+      rect:
+        serializedVersion: 2
+        x: 1610
+        y: 165
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b11e449137003342a0c37d1c1ddc3c1
+      internalID: -70828238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_24"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da1b7398641fd1d459a395104c6610b5
+      internalID: -1866941926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_25"
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 2
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d26bc36cdca3ec4b9897af0c2ee7ebc
+      internalID: -358980063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_26"
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 2
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 415ebb64a2ca4a247945aa380d8fb93d
+      internalID: -409391459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_27"
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 2
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bdcee5bcb3f9d1438ddbfd77cf176a0
+      internalID: 1961775582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_28"
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 2
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59e4b6d8ce55ee647a9a869887abefca
+      internalID: -1167412066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_29"
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 2
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac74f315d9f1ac34c98183aee95a00ec
+      internalID: 1087557405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_30"
+      rect:
+        serializedVersion: 2
+        x: 966
+        y: 2
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff2e2336994e8544b9eca9b8bdc8e2c2
+      internalID: 823561342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_31"
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 2
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86f07381272b8f244a32b8196bb45583
+      internalID: -448314648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_32"
+      rect:
+        serializedVersion: 2
+        x: 1288
+        y: 2
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2a28a67fc18db34b9b5e444cb09e569
+      internalID: -1414505913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "palito - anima\xE7\xE3o_33"
+      rect:
+        serializedVersion: 2
+        x: 1449
+        y: 2
+        width: 161
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e811cf58e2a1ff44981c9e535c3ffc3
+      internalID: 1870034836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 3ce2736cc4626f445b8fdb756fca5f9c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      "palito - anima\xE7\xE3o_0": -1024822729
+      "palito - anima\xE7\xE3o_1": 844188417
+      "palito - anima\xE7\xE3o_10": 561097502
+      "palito - anima\xE7\xE3o_11": 954942534
+      "palito - anima\xE7\xE3o_12": -1663303918
+      "palito - anima\xE7\xE3o_13": 1500183856
+      "palito - anima\xE7\xE3o_14": -2097575194
+      "palito - anima\xE7\xE3o_15": 1981516415
+      "palito - anima\xE7\xE3o_16": 78025511
+      "palito - anima\xE7\xE3o_17": -2024940623
+      "palito - anima\xE7\xE3o_18": -773706034
+      "palito - anima\xE7\xE3o_19": 1547086809
+      "palito - anima\xE7\xE3o_2": 790086021
+      "palito - anima\xE7\xE3o_20": -1294591254
+      "palito - anima\xE7\xE3o_21": -1693263346
+      "palito - anima\xE7\xE3o_22": -289609350
+      "palito - anima\xE7\xE3o_23": -70828238
+      "palito - anima\xE7\xE3o_24": -1866941926
+      "palito - anima\xE7\xE3o_25": -358980063
+      "palito - anima\xE7\xE3o_26": -409391459
+      "palito - anima\xE7\xE3o_27": 1961775582
+      "palito - anima\xE7\xE3o_28": -1167412066
+      "palito - anima\xE7\xE3o_29": 1087557405
+      "palito - anima\xE7\xE3o_3": -838507424
+      "palito - anima\xE7\xE3o_30": 823561342
+      "palito - anima\xE7\xE3o_31": -448314648
+      "palito - anima\xE7\xE3o_32": -1414505913
+      "palito - anima\xE7\xE3o_33": 1870034836
+      "palito - anima\xE7\xE3o_4": -1020886096
+      "palito - anima\xE7\xE3o_5": 215765330
+      "palito - anima\xE7\xE3o_6": -368061174
+      "palito - anima\xE7\xE3o_7": 1634234255
+      "palito - anima\xE7\xE3o_8": 1563778282
+      "palito - anima\xE7\xE3o_9": 537103770
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
