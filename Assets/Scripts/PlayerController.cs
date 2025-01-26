@@ -1,4 +1,3 @@
-using System.Text;
 using System;
 using UnityEngine;
 using System.Collections;
@@ -74,7 +73,6 @@ public class CharacterController2D : MonoBehaviour {
     UpdatePlayerColor();
     playerAnima.SetFloat("xVelocity", Math.Abs (rb.linearVelocity.x));
     playerAnima.SetFloat("yVelocity",rb.linearVelocity.y);
-    Debug.Log(rb.linearVelocity.y);
   }
 
   private void InitializeProjectilePools() {
@@ -185,7 +183,7 @@ public class CharacterController2D : MonoBehaviour {
   }
 
   private void HandleDash() {
-    if(Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isDashing) {
+    if(Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isDashing && rb.linearVelocityX != 0) {
       StartCoroutine(PerformDash());
     
     }   
