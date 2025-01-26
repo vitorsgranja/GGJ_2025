@@ -1,3 +1,4 @@
+
 using System.Collections;
 using UnityEngine;
 
@@ -28,6 +29,7 @@ public class StickEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(""+player);
         //is grounded?
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 1f, groundLayer);
 
