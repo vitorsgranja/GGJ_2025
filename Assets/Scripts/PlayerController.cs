@@ -12,6 +12,7 @@ public class CharacterController2D : MonoBehaviour {
   public Transform firePoint;
   public Transform projectileParent; // Parent for pooled projectiles
   public Color baseColor = Color.blue;
+
   public Color secondaryWeaponColor = Color.magenta;
 
   [Header("Jump Settings")]
@@ -154,10 +155,12 @@ public class CharacterController2D : MonoBehaviour {
   private void HandleShooting() {
     if(Input.GetButtonDown("Fire1") && currentHealth > shootHealthConsumption) {
       if(currentWeaponIndex == 0 || secondaryWeaponAmmo > 0) {
+         playerAnima.Play("Attack");
         GameObject projectile = GetPooledProjectile(currentWeaponIndex);
         projectile.transform.position = firePoint.position;
         projectile.transform.rotation = firePoint.rotation;
         projectile.GetComponent<Rigidbody2D>().linearVelocity = firePoint.right * 10f; // Example speed
+        
 
         ConsumeHealth(shootHealthConsumption);
         if(currentWeaponIndex != 0) {
@@ -167,6 +170,7 @@ public class CharacterController2D : MonoBehaviour {
           }
         }
       }
+      
     }
   }
 
@@ -183,7 +187,9 @@ public class CharacterController2D : MonoBehaviour {
   private void HandleDash() {
     if(Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isDashing) {
       StartCoroutine(PerformDash());
-    }
+    
+    }   
+    
   }
 
   private IEnumerator PerformDash() {
@@ -194,8 +200,12 @@ public class CharacterController2D : MonoBehaviour {
     rb.gravityScale = 0; // Disable gravity during dash
     Vector2 dashDirection = new Vector2(transform.localScale.x,0).normalized;
 
+    this.GetComponent<TrailRenderer>().enabled = true;
+
     rb.linearVelocity = dashDirection * dashSpeed;
     yield return new WaitForSeconds(dashDuration);
+
+    this.GetComponent<TrailRenderer>().enabled = false; 
 
     rb.gravityScale = originalGravity;
     rb.linearVelocity = Vector2.zero;
@@ -203,6 +213,7 @@ public class CharacterController2D : MonoBehaviour {
 
     yield return new WaitForSeconds(dashCooldown);
     canDash = true;
+    
   }
 
 
@@ -233,12 +244,12 @@ public class CharacterController2D : MonoBehaviour {
       // Se o mouse estiver � esquerda do personagem, inverte o sprite
       spriteRenderer.flipX = true;
       // Se o mouse estiver � esquerda do personagem, inverte o firePoint
-      firePoint.transform.localPosition = new Vector3(-0.1f,0,0);
+      firePoint.transform.localPosition = new Vector3(-0.1f,-0.043f,0);
     } else {
       // Se o mouse estiver � direita, o sprite n�o � invertido
       spriteRenderer.flipX = false;
       // Se o mouse estiver � esquerda do personagem, inverte o firePoint
-      firePoint.transform.localPosition = new Vector3(0.1f,0,0);
+      firePoint.transform.localPosition = new Vector3(0.1f,-0.043f,0);
 
     }
   }
@@ -258,13 +269,31 @@ public class CharacterController2D : MonoBehaviour {
 
   private void UpdatePlayerColor() {
     if(currentWeaponIndex == 0) {
-      spriteRenderer.color = baseColor;
+      spriteRenderer.color = baseColor; 
+      TailColor(baseColor); 
     } else {
       float intensity = Mathf.Clamp01(secondaryWeaponAmmo / 10f);
-      spriteRenderer.color = Color.Lerp(baseColor,secondaryWeaponColor,intensity);
+      spriteRenderer.color = Color.Lerp(baseColor,secondaryWeaponColor,intensity);  
+      TailColor(Color.Lerp(baseColor,secondaryWeaponColor,intensity));  
     }
-  }
 
+   
+  }
+ public void TailColor(Color ColorTail){
+    TrailRenderer trail = GetComponent<TrailRenderer>();
+    if (trail != null)
+    {
+      // Criar um gradiente para o TrailRenderer
+      Gradient gradient = new Gradient();
+      gradient.SetKeys(
+          new GradientColorKey[] { new GradientColorKey(ColorTail, 0.0f), new GradientColorKey(ColorTail, 1.0f) },
+          new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0.0f, 1.0f) }
+        );
+
+        // Atribuir o gradiente ao TrailRenderer
+        trail.colorGradient = gradient;
+   }
+ }
   private void Die() {
     // Add logic for player death here
     Debug.Log("Player died.");
