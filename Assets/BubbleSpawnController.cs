@@ -3,7 +3,7 @@ using UnityEngine;
 public class BubbleSpawnController : MonoBehaviour
 {
 	private const float DELAY_START_SPAWN = 5;
-	private const float DELAY_BUBBLES_GENERATION = 3;
+	private const float DELAY_BUBBLES_GENERATION = 5;
 	private const float INITIAL_SCALE = 0.5f;
 
 	private float remainingTimeDelay = DELAY_START_SPAWN;

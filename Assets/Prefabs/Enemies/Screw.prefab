@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6992490847123442732}
   - component: {fileID: 2499949582764395808}
   - component: {fileID: 6020314313701025738}
+  - component: {fileID: 6420379357755730633}
   m_Layer: 0
   m_Name: Screw
   m_TagString: Untagged
@@ -185,3 +186,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6420379357755730633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2982633049095409232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f4402e655bc264eaad207c75991419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
