@@ -73,7 +73,6 @@ public class CharacterController2D : MonoBehaviour {
     UpdatePlayerColor();
     playerAnima.SetFloat("xVelocity", Math.Abs (rb.linearVelocity.x));
     playerAnima.SetFloat("yVelocity",rb.linearVelocity.y);
-    Debug.Log(rb.linearVelocity.y);
   }
 
   private void InitializeProjectilePools() {

@@ -17,8 +17,7 @@ public class PlayerProjectile : MonoBehaviour {
         if(!collision.CompareTag("Player"))
         {
             controller.ReturnProjectileToPool(gameObject,weaponIndex);
-        }
-        
+        }        
     }
 
 

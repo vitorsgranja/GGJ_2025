@@ -113,7 +113,7 @@ public class StickEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag("OutOfBound"))
         {
             this.gameObject.SetActive(false);
-            //player.GetComponent<CharacterController2D>().
+            //player.GetComponent<CharacterController2D>().AddLife(5);
         }
     }
 
