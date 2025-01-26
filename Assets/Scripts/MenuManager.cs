@@ -15,14 +15,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Ease panelEaseOut = Ease.InBack;
     
     [Header("Menu Animation Settings")]
-    [SerializeField] private float menuSlideDistance = 1000f; // Distância que o menu desce
-
-    [Header("Options Bubble Settings")]
-    [SerializeField] private float bubbleRiseDistance = 1000f;
-    [SerializeField] private float bubbleScaleTime = 0.6f;
-    [SerializeField] private float bubbleRiseTime = 1f;
-    [SerializeField] private Ease bubbleEase = Ease.OutExpo;
-    [SerializeField] private float bubbleWobbleStrength = 50f;
+    [SerializeField] private float menuSlideDistance = 1000f; // Distância que os painéis descem
     
     private Vector3 optionsPanelOriginalPosition;
     private Vector3 mainMenuOriginalPosition;
@@ -69,7 +62,7 @@ public class MenuManager : MonoBehaviour
 
     public void OpenOptions()
     {
-        if (isAnimating) return; // Previne múltiplos cliques durante a animação
+        if (isAnimating) return;
         isAnimating = true;
 
         // Anima o menu principal para baixo
@@ -90,31 +83,27 @@ public class MenuManager : MonoBehaviour
         // Prepara e mostra o painel de opções
         optionsPanel.SetActive(true);
         optionsPanel.transform.localScale = Vector3.zero;
-        optionsPanel.transform.localPosition = optionsPanelOriginalPosition - new Vector3(0, bubbleRiseDistance, 0);
+        optionsPanel.transform.localPosition = optionsPanelOriginalPosition - new Vector3(0, menuSlideDistance, 0);
 
-        // Sequência de animação da bolha
-        Sequence bubbleSequence = DOTween.Sequence();
+        // Anima o painel de opções subindo
+        Sequence optionsSequence = DOTween.Sequence();
 
-        bubbleSequence.Append(optionsPanel.transform
-            .DOLocalMoveY(optionsPanelOriginalPosition.y, bubbleRiseTime)
-            .SetEase(bubbleEase));
-
-        bubbleSequence.Join(optionsPanel.transform
-            .DOLocalMoveX(optionsPanelOriginalPosition.x + Random.Range(-bubbleWobbleStrength, bubbleWobbleStrength), bubbleRiseTime)
-            .SetEase(Ease.InOutSine));
-
-        bubbleSequence.Join(optionsPanel.transform
-            .DOScale(1, bubbleScaleTime)
+        optionsSequence.Append(optionsPanel.transform
+            .DOLocalMove(optionsPanelOriginalPosition, panelTransitionTime)
             .SetEase(panelEaseIn));
 
-        bubbleSequence.OnComplete(() => {
-            isAnimating = false; // Libera para novas interações apenas quando a animação terminar
+        optionsSequence.Join(optionsPanel.transform
+            .DOScale(1, panelTransitionTime)
+            .SetEase(panelEaseIn));
+
+        optionsSequence.OnComplete(() => {
+            isAnimating = false;
         });
     }
 
     public void CloseOptions()
     {
-        if (isAnimating) return; // Previne múltiplos cliques durante a animação
+        if (isAnimating) return;
         isAnimating = true;
 
         // Mostra e anima o menu principal de volta
@@ -133,20 +122,20 @@ public class MenuManager : MonoBehaviour
             .SetEase(panelEaseIn));
 
         // Anima o painel de opções para baixo
-        Sequence bubbleSequence = DOTween.Sequence();
+        Sequence optionsExitSequence = DOTween.Sequence();
 
-        bubbleSequence.Append(optionsPanel.transform
-            .DOLocalMoveY(optionsPanelOriginalPosition.y - bubbleRiseDistance, bubbleRiseTime)
-            .SetEase(Ease.InBack));
-
-        bubbleSequence.Join(optionsPanel.transform
-            .DOScale(0, bubbleScaleTime)
+        optionsExitSequence.Append(optionsPanel.transform
+            .DOLocalMoveY(optionsPanelOriginalPosition.y - menuSlideDistance, panelTransitionTime)
             .SetEase(panelEaseOut));
 
-        bubbleSequence.OnComplete(() => {
+        optionsExitSequence.Join(optionsPanel.transform
+            .DOScale(0, panelTransitionTime)
+            .SetEase(panelEaseOut));
+
+        optionsExitSequence.OnComplete(() => {
             optionsPanel.SetActive(false);
             optionsPanel.transform.localPosition = optionsPanelOriginalPosition;
-            isAnimating = false; // Libera para novas interações apenas quando a animação terminar
+            isAnimating = false;
         });
     }
 

@@ -2648,15 +2648,10 @@ MonoBehaviour:
   mainMenuPanel: {fileID: 436284981}
   optionsPanel: {fileID: 1949243360}
   menuButtons: {fileID: 27003038}
-  panelTransitionTime: 0.5
+  panelTransitionTime: 0.6
   panelEaseIn: 27
   panelEaseOut: 26
-  menuSlideDistance: 1000
-  bubbleRiseDistance: 1000
-  bubbleScaleTime: 0.6
-  bubbleRiseTime: 1
-  bubbleEase: 18
-  bubbleWobbleStrength: 50
+  menuSlideDistance: 1500
   gameSceneName: GameScene
 --- !u!1 &1690852378
 GameObject:
