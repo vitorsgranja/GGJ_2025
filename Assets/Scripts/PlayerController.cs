@@ -33,6 +33,8 @@ public class CharacterController2D : MonoBehaviour {
   public float dashDuration = 0.2f;
   public float dashCooldown = 1f;
 
+  public GameMenu gameMenu;
+
   private Rigidbody2D rb;
   private AudioManager audioManager;
   private SpriteRenderer spriteRenderer;
@@ -303,8 +305,9 @@ public class CharacterController2D : MonoBehaviour {
     audioManager.PlaySound(audioManager.effectList[2]);
     Debug.Log("Player died.");
     playerAnima.Play("Dead");
+        gameMenu.Defeat();
+    }
 
-  }
   public void AddLife(float life) {
     if(!invulnerability || life > 0) {
       currentHealth += life;

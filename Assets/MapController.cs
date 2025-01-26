@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +31,8 @@ public class MapController : MonoBehaviour
 
     private float lastDamageTime = -1f;
     private bool ascensionComplete = false;
+
+    public GameMenu gameMenu;
 
     float maxY = 0f, maxX = 0f, minY = 0f, minX = 0f;
 
@@ -202,7 +205,8 @@ public class MapController : MonoBehaviour
 		if (collision.name == "TriggerFinish")
 		{
             ascensionComplete = true;
-		}
+            gameMenu.Victory();
+        }
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)

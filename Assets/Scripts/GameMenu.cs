@@ -22,9 +22,11 @@ public class GameMenu : MonoBehaviour {
   public void Victory() {
     Time.timeScale = 0.01f;
     victory.SetActive(true);
+        Debug.Log("AAAAAAAAA VICTORY");
   }
   public void Defeat() {
     Time.timeScale = 0.01f;
     defeat.SetActive(true);
-  }
+        Debug.Log("AAAAAAAAA DEFEAT");
+    }
 }
