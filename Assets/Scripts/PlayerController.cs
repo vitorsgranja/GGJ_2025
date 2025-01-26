@@ -34,6 +34,7 @@ public class CharacterController2D : MonoBehaviour {
   public float dashCooldown = 1f;
 
   private Rigidbody2D rb;
+  private AudioManager audioManager;
   private SpriteRenderer spriteRenderer;
   private float currentHealth;
   private bool isGrounded;
@@ -50,6 +51,7 @@ public class CharacterController2D : MonoBehaviour {
   private Animator playerAnima;
   private bool IsMove;
   private void Start() {
+    audioManager = AudioManager.instance;
     rb = GetComponent<Rigidbody2D>();
     spriteRenderer = GetComponent<SpriteRenderer>();
     currentHealth = maxHealth;
@@ -71,7 +73,7 @@ public class CharacterController2D : MonoBehaviour {
     HandleMouseFunctions();
     UpdatePlayerSize();
     UpdatePlayerColor();
-    playerAnima.SetFloat("xVelocity", Math.Abs (rb.linearVelocity.x));
+    playerAnima.SetFloat("xVelocity",Math.Abs(rb.linearVelocity.x));
     playerAnima.SetFloat("yVelocity",rb.linearVelocity.y);
   }
 
@@ -111,7 +113,7 @@ public class CharacterController2D : MonoBehaviour {
     rb.linearVelocity = new Vector2(moveInput * moveSpeed,rb.linearVelocity.y);
     if(moveInput != 0) {
       transform.localScale = new Vector3(Mathf.Sign(moveInput),1,1);
-    } 
+    }
   }
 
   private void HandleJumpAndJetpack() {
@@ -120,7 +122,7 @@ public class CharacterController2D : MonoBehaviour {
       isJumping = true;
       rb.linearVelocity = new Vector2(rb.linearVelocity.x,initialJumpForce);
       StartCoroutine(EnableJetpackAfterDelay());
-      playerAnima.SetBool("IsJump", !isGrounded);
+      playerAnima.SetBool("IsJump",!isGrounded);
     }
 
     if(isJumping) {
@@ -153,12 +155,13 @@ public class CharacterController2D : MonoBehaviour {
   private void HandleShooting() {
     if(Input.GetButtonDown("Fire1") && currentHealth > shootHealthConsumption) {
       if(currentWeaponIndex == 0 || secondaryWeaponAmmo > 0) {
-         playerAnima.Play("Attack");
+        playerAnima.Play("Attack");
+        audioManager.PlaySound(audioManager.effectList[1]);
         GameObject projectile = GetPooledProjectile(currentWeaponIndex);
         projectile.transform.position = firePoint.position;
         projectile.transform.rotation = firePoint.rotation;
         projectile.GetComponent<Rigidbody2D>().linearVelocity = firePoint.right * 10f; // Example speed
-        
+
 
         ConsumeHealth(shootHealthConsumption);
         if(currentWeaponIndex != 0) {
@@ -168,7 +171,7 @@ public class CharacterController2D : MonoBehaviour {
           }
         }
       }
-      
+
     }
   }
 
@@ -185,9 +188,9 @@ public class CharacterController2D : MonoBehaviour {
   private void HandleDash() {
     if(Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isDashing && rb.linearVelocityX != 0) {
       StartCoroutine(PerformDash());
-    
-    }   
-    
+
+    }
+
   }
 
   private IEnumerator PerformDash() {
@@ -203,7 +206,7 @@ public class CharacterController2D : MonoBehaviour {
     rb.linearVelocity = dashDirection * dashSpeed;
     yield return new WaitForSeconds(dashDuration);
 
-    this.GetComponent<TrailRenderer>().enabled = false; 
+    this.GetComponent<TrailRenderer>().enabled = false;
 
     rb.gravityScale = originalGravity;
     rb.linearVelocity = Vector2.zero;
@@ -211,7 +214,7 @@ public class CharacterController2D : MonoBehaviour {
 
     yield return new WaitForSeconds(dashCooldown);
     canDash = true;
-    
+
   }
 
 
@@ -267,38 +270,40 @@ public class CharacterController2D : MonoBehaviour {
 
   private void UpdatePlayerColor() {
     if(currentWeaponIndex == 0) {
-      spriteRenderer.color = baseColor; 
-      TailColor(baseColor); 
+      spriteRenderer.color = baseColor;
+      TailColor(baseColor);
     } else {
       float intensity = Mathf.Clamp01(secondaryWeaponAmmo / 10f);
-      spriteRenderer.color = Color.Lerp(baseColor,secondaryWeaponColor,intensity);  
-      TailColor(Color.Lerp(baseColor,secondaryWeaponColor,intensity));  
+      spriteRenderer.color = Color.Lerp(baseColor,secondaryWeaponColor,intensity);
+      TailColor(Color.Lerp(baseColor,secondaryWeaponColor,intensity));
     }
 
-   
+
   }
- public void TailColor(Color ColorTail){
+  public void TailColor(Color ColorTail) {
     TrailRenderer trail = GetComponent<TrailRenderer>();
-    if (trail != null)
-    {
+    if(trail != null) {
       // Criar um gradiente para o TrailRenderer
       Gradient gradient = new Gradient();
       gradient.SetKeys(
-          new GradientColorKey[] { new GradientColorKey(ColorTail, 0.0f), new GradientColorKey(ColorTail, 1.0f) },
-          new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0.0f, 1.0f) }
+          new GradientColorKey[] { new GradientColorKey(ColorTail,0.0f),new GradientColorKey(ColorTail,1.0f) },
+          new GradientAlphaKey[] { new GradientAlphaKey(1.0f,0.0f),new GradientAlphaKey(0.0f,1.0f) }
         );
 
-        // Atribuir o gradiente ao TrailRenderer
-        trail.colorGradient = gradient;
-   }
- }
+      // Atribuir o gradiente ao TrailRenderer
+      trail.colorGradient = gradient;
+    }
+  }
   private void Die() {
     // Add logic for player death here
+    audioManager.PlaySound(audioManager.effectList[2]);
     Debug.Log("Player died.");
+    playerAnima.Play("Dead");
+
   }
   public void AddLife(float life) {
     currentHealth += life;
-    if (currentHealth > maxHealth) {
+    if(currentHealth > maxHealth) {
       currentHealth = maxHealth;
     } else if(currentHealth <= 0) {
       Die();
@@ -313,6 +318,7 @@ public class CharacterController2D : MonoBehaviour {
 
     if(collision.CompareTag("Enemy")) {
       ConsumeHealth(20);
+      audioManager.PlaySound(audioManager.effectList[3]);
     }
 
     if(collision.CompareTag("WeaponPickup")) {
@@ -324,7 +330,7 @@ public class CharacterController2D : MonoBehaviour {
   private void OnCollisionStay2D(Collision2D collision) {
     if(collision.gameObject.CompareTag("Ground") && rb.linearVelocity.y <= 0) {
       isGrounded = true;
-      playerAnima.SetBool("IsJump", !isGrounded);
+      playerAnima.SetBool("IsJump",!isGrounded);
       canUseJetpack = false; // Disable jetpack when grounded
     }
   }

@@ -1,25 +1,32 @@
+using System.Text.RegularExpressions;
+using System;
 using UnityEngine;
 
 public class HookEnemy : MonoBehaviour
 {
     [SerializeField] private float life;
     [SerializeField] private float speed;
-    [SerializeField] private float attackDistance;
+    [SerializeField] private float attackDistance=0;
     [SerializeField] private float attackCooldown;
 
 
     private Rigidbody2D enemyRB;
     private Vector2 direction;
     private GameObject player;
+    private Animator HookAnima;
 
     private BoidController boid;
     private float distancePlayer;
+    
+    
 
     private void Start()
     {
+        
         enemyRB = this.GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         boid = GetComponent<BoidController>();
+        HookAnima = GetComponent<Animator>();
     }
     private void Update()
     {
@@ -28,11 +35,14 @@ public class HookEnemy : MonoBehaviour
         {
             boid.TargetPlayer();
             boid.Seek();
+            HookAnima.SetBool("IsMove", true);
         }
         else
         {
+             HookAnima.SetBool("IsMove", false);
             Attack();
         }
+        
     }
     private void Attack()
     {
