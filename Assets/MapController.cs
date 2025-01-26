@@ -6,12 +6,12 @@ public class MapController : MonoBehaviour
     private const float MAP_LIFE_SECONDS = 20f;
     private const float MAP_SIZE_DIVIDER = 6;
     private const int MAP_BORDER_STEP = 314;
-    private const float MAP_MIN_LIFE = 50f;
+    private const float MAP_MIN_LIFE = 60f;
     private const int VALVE_LIFE = 10;
     private const int MAX_TIME_UNTIL_NEXT_BUBBLE_SPAWNER = 20;
     private const int MIN_TIME_UNTIL_NEXT_BUBBLE_SPAWNER = 5;
     private const float MAX_MAP_LIFE = 100f;
-    private const float ASCENSION_SPEED = 0.01f;
+    private const float ASCENSION_SPEED = 0.003f;
 
     public LineRenderer mapBorderLineRenderer;
     public float mapLife = MAX_MAP_LIFE;
