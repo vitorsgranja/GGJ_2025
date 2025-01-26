@@ -34,7 +34,7 @@ public class HookEnemy : MonoBehaviour
         if (distancePlayer > attackDistance)
         {
             boid.TargetPlayer();
-            boid.Seek();s
+            boid.Seek();
             HookAnima.SetBool("IsMove", true);
         }
         else
