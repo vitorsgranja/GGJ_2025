@@ -8,7 +8,6 @@ TagManager:
   - Ground
   - Enemy
   - Bubble
-  - PlayerBullet
   layers:
   - Default
   - TransparentFX
