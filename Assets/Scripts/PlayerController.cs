@@ -317,7 +317,7 @@ public class CharacterController2D : MonoBehaviour {
     }
 
     if(collision.CompareTag("Enemy")) {
-      ConsumeHealth(20);
+      //ConsumeHealth(20);
       audioManager.PlaySound(audioManager.effectList[3]);
     }
 

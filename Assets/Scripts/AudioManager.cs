@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour {
   [Tooltip("music 0 - theme music")]
   public List<AudioClip> musicList = new List<AudioClip>(); // List of Musics
   [Tooltip("sound 0 - button\nsound 1 - Player Attack\nsound 2 - Player Dead\nsound 3 - Player Damaged\n" +
-    "sound 4 - Stick Dead\nsound 5 - Ourico Attack\nsound 6 - Stick Attack\nsound 7 - Hook Attack\nsound 8 - Hook Dead\n")]
+    "sound 4 - Stick Dead\nsound 5 - Ourico Attack\nsound 6 - Stick Attack\nsound 7 - Hook Attack\nsound 8 - Hook Dead\nsound 9 - Gear")]
   public List<AudioClip> effectList = new List<AudioClip>(); // List of Effects
   private void Awake() {
     // Ensure only one instance of AudioManager exists
