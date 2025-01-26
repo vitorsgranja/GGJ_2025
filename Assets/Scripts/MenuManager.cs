@@ -7,38 +7,33 @@ public class MenuManager : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject optionsPanel;
-    [SerializeField] private GameObject coral;
     [SerializeField] private GameObject menuButtons;
     
     [Header("Animation Settings")]
     [SerializeField] private float panelTransitionTime = 0.5f;
-    [SerializeField] private float coralTransitionTime = 0.8f;
     [SerializeField] private Ease panelEaseIn = Ease.OutBack;
     [SerializeField] private Ease panelEaseOut = Ease.InBack;
-    [SerializeField] private Ease coralEase = Ease.InOutQuart;
     
-    [Header("Coral Animation Settings")]
-    [SerializeField] private float coralRotation = -30f; // Rotação do coral ao sair
-    [SerializeField] private float coralMoveX = 300f; // Distância que o coral move para a direita
-    
-    [Header("Game Settings")]
-    [SerializeField] private string gameSceneName = "GameScene";
+    [Header("Menu Animation Settings")]
+    [SerializeField] private float menuSlideDistance = 1000f; // Distância que o menu desce
 
     [Header("Options Bubble Settings")]
-    [SerializeField] private float bubbleRiseDistance = 1000f; // Distância que a bolha sobe
+    [SerializeField] private float bubbleRiseDistance = 1000f;
     [SerializeField] private float bubbleScaleTime = 0.6f;
     [SerializeField] private float bubbleRiseTime = 1f;
     [SerializeField] private Ease bubbleEase = Ease.OutExpo;
-    [SerializeField] private float bubbleWobbleStrength = 50f; // Força do movimento lateral
+    [SerializeField] private float bubbleWobbleStrength = 50f;
     
-    private Vector3 coralOriginalPosition;
-    private Quaternion coralOriginalRotation;
     private Vector3 optionsPanelOriginalPosition;
     private Vector3 mainMenuOriginalPosition;
 
+    [Header("Game Settings")]
+    [SerializeField] private string gameSceneName = "GameScene";
+
+    private bool isAnimating = false; // Flag para controlar o estado da animação
+
     private void Start()
     {
-        // Configuração inicial dos painéis
         if (mainMenuPanel != null)
         {
             mainMenuPanel.SetActive(true);
@@ -53,39 +48,18 @@ public class MenuManager : MonoBehaviour
             optionsPanel.transform.localScale = Vector3.zero;
         }
 
-        // Salva a posição e rotação original do coral
-        if (coral != null)
-        {
-            coralOriginalPosition = coral.transform.localPosition;
-            coralOriginalRotation = coral.transform.localRotation;
-        }
-
-        // Configura os botões do menu
         if (menuButtons != null)
         {
             menuButtons.transform.localScale = Vector3.one;
-        }
-
-        // Salva a posição original do mainMenuPanel também
-        if (mainMenuPanel != null)
-        {
-            mainMenuPanel.SetActive(true);
-            mainMenuPanel.transform.localScale = Vector3.one;
         }
     }
 
     public void StartGame()
     {
-        // Anima o coral para fora
-        if (coral != null)
-        {
-            coral.transform.DOLocalMoveX(coralOriginalPosition.x + coralMoveX, coralTransitionTime)
-                .SetEase(coralEase);
-            coral.transform.DORotate(new Vector3(0, 0, coralRotation), coralTransitionTime)
-                .SetEase(coralEase);
-        }
-
-        // Transição do painel e carrega a cena
+        // Anima o menu para baixo e diminui a escala
+        mainMenuPanel.transform.DOLocalMoveY(mainMenuOriginalPosition.y - menuSlideDistance, panelTransitionTime)
+            .SetEase(panelEaseOut);
+        
         mainMenuPanel.transform.DOScale(0, panelTransitionTime)
             .SetEase(panelEaseOut)
             .OnComplete(() => {
@@ -95,22 +69,20 @@ public class MenuManager : MonoBehaviour
 
     public void OpenOptions()
     {
-        // Anima o coral, o painel principal e os botões juntos
+        if (isAnimating) return; // Previne múltiplos cliques durante a animação
+        isAnimating = true;
+
+        // Anima o menu principal para baixo
         Sequence menuExitSequence = DOTween.Sequence();
 
-        if (coral != null)
-        {
-            menuExitSequence.Join(coral.transform.DOLocalMoveX(coralOriginalPosition.x + coralMoveX, coralTransitionTime)
-                .SetEase(coralEase));
-            menuExitSequence.Join(coral.transform.DORotate(new Vector3(0, 0, coralRotation), coralTransitionTime)
-                .SetEase(coralEase));
-        }
+        menuExitSequence.Append(mainMenuPanel.transform
+            .DOLocalMoveY(mainMenuOriginalPosition.y - menuSlideDistance, panelTransitionTime)
+            .SetEase(panelEaseOut));
 
-        // Move o painel principal junto com o coral
-        menuExitSequence.Join(mainMenuPanel.transform.DOLocalMoveX(mainMenuOriginalPosition.x + coralMoveX, coralTransitionTime)
-            .SetEase(coralEase));
+        menuExitSequence.Join(mainMenuPanel.transform
+            .DOScale(0, panelTransitionTime)
+            .SetEase(panelEaseOut));
 
-        // Esconde o menu principal ao final da animação
         menuExitSequence.OnComplete(() => {
             mainMenuPanel.SetActive(false);
         });
@@ -123,39 +95,42 @@ public class MenuManager : MonoBehaviour
         // Sequência de animação da bolha
         Sequence bubbleSequence = DOTween.Sequence();
 
-        // Movimento de subida com wobble
         bubbleSequence.Append(optionsPanel.transform
             .DOLocalMoveY(optionsPanelOriginalPosition.y, bubbleRiseTime)
             .SetEase(bubbleEase));
 
-        // Adiciona um pequeno movimento lateral (wobble)
         bubbleSequence.Join(optionsPanel.transform
             .DOLocalMoveX(optionsPanelOriginalPosition.x + Random.Range(-bubbleWobbleStrength, bubbleWobbleStrength), bubbleRiseTime)
             .SetEase(Ease.InOutSine));
 
-        // Escala a bolha
         bubbleSequence.Join(optionsPanel.transform
             .DOScale(1, bubbleScaleTime)
             .SetEase(panelEaseIn));
+
+        bubbleSequence.OnComplete(() => {
+            isAnimating = false; // Libera para novas interações apenas quando a animação terminar
+        });
     }
 
     public void CloseOptions()
     {
-        Sequence menuEnterSequence = DOTween.Sequence();
+        if (isAnimating) return; // Previne múltiplos cliques durante a animação
+        isAnimating = true;
 
-        // Anima o coral de volta para sua posição original exata
-        if (coral != null)
-        {
-            menuEnterSequence.Join(coral.transform.DOLocalMove(coralOriginalPosition, coralTransitionTime)
-                .SetEase(coralEase));
-            menuEnterSequence.Join(coral.transform.DORotateQuaternion(coralOriginalRotation, coralTransitionTime)
-                .SetEase(coralEase));
-        }
-
-        // Mostra e anima o menu principal de volta para sua posição original exata
+        // Mostra e anima o menu principal de volta
         mainMenuPanel.SetActive(true);
-        menuEnterSequence.Join(mainMenuPanel.transform.DOLocalMove(mainMenuOriginalPosition, coralTransitionTime)
-            .SetEase(coralEase));
+        mainMenuPanel.transform.localScale = Vector3.zero;
+        mainMenuPanel.transform.localPosition = mainMenuOriginalPosition - new Vector3(0, menuSlideDistance, 0);
+
+        Sequence menuEnterSequence = DOTween.Sequence();
+        
+        menuEnterSequence.Append(mainMenuPanel.transform
+            .DOLocalMove(mainMenuOriginalPosition, panelTransitionTime)
+            .SetEase(panelEaseIn));
+        
+        menuEnterSequence.Join(mainMenuPanel.transform
+            .DOScale(1, panelTransitionTime)
+            .SetEase(panelEaseIn));
 
         // Anima o painel de opções para baixo
         Sequence bubbleSequence = DOTween.Sequence();
@@ -171,6 +146,7 @@ public class MenuManager : MonoBehaviour
         bubbleSequence.OnComplete(() => {
             optionsPanel.SetActive(false);
             optionsPanel.transform.localPosition = optionsPanelOriginalPosition;
+            isAnimating = false; // Libera para novas interações apenas quando a animação terminar
         });
     }
 
@@ -185,8 +161,6 @@ public class MenuManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Limpa todas as tweens ao destruir o objeto
-        if (coral != null) DOTween.Kill(coral.transform);
         if (mainMenuPanel != null) DOTween.Kill(mainMenuPanel.transform);
         if (optionsPanel != null) DOTween.Kill(optionsPanel.transform);
         if (menuButtons != null) DOTween.Kill(menuButtons.transform);
