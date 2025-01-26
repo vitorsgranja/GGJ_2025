@@ -153,7 +153,8 @@ public class CharacterController2D : MonoBehaviour {
     if(!isGrounded) {
       canUseJetpack = true;
     }
-  }  private IEnumerator ResetInvulnerabilityState() {
+  }  
+  private IEnumerator ResetInvulnerabilityState() {
     yield return new WaitForSeconds(1f);
     invulnerability = false;
   }
@@ -309,17 +310,21 @@ public class CharacterController2D : MonoBehaviour {
     }
 
   public void AddLife(float life) {
+        Debug.Log("Add life " + life + " inv = " + invulnerability);
     if(!invulnerability || life > 0) {
-      currentHealth += life;
+            Debug.Log("not vulnerable or life > 0" + life);
+            currentHealth += life;
       if(currentHealth > maxHealth) {
         currentHealth = maxHealth;
       } else if(currentHealth <= 0) {
         Die();
       }
+            Debug.Log(currentHealth);
     }
 
-    if(life < 0) {
-      ResetInvulnerabilityState();
+    if(life < 0 && !invulnerability) {
+            Debug.Log("life < 0 and !invule life" + life);
+            StartCoroutine(nameof(ResetInvulnerabilityState));
       invulnerability = true;
     }
   }
