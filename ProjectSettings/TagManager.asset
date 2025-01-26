@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - Bubble
   - WeaponPickup
+  - PlayerBullet
+  - OutOfBound
   layers:
   - Default
   - TransparentFX

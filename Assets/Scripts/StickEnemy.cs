@@ -15,11 +15,14 @@ public class StickEnemy : MonoBehaviour
 
     bool canJump = true;
 
+    float maxSpeed = 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        maxSpeed = speed;
     }
 
     // Update is called once per frame
@@ -86,10 +89,49 @@ public class StickEnemy : MonoBehaviour
     {
         if (collision.CompareTag("PlayerBullet"))
         {
-            //int playerProjectile = collision.GetComponent<PlayerProjectile>().weaponIndex;
-            //rb.gravityScale 
+            int playerProjectile = collision.transform.parent.GetComponent<PlayerProjectile>().weaponIndex;
+            if (playerProjectile == 0)
+            {
+                rb.gravityScale -= 0.3f;
+                StartCoroutine("BubbleEffectOff");
+
+            }
+            if (playerProjectile == 1)
+            {
+                speed -= 1f;
+                if(speed <= 0)
+                {
+                    speed = 0;
+                }
+                StartCoroutine("SlowEffectOff");
+            }
+        }      
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("OutOfBound"))
+        {
+            this.gameObject.SetActive(false);
+            //player.GetComponent<CharacterController2D>().
         }
     }
+
+    private IEnumerator BubbleEffectOff()
+    {
+        yield return new WaitForSeconds(4);
+        rb.gravityScale += 0.3f;
+    }
+    private IEnumerator SlowEffectOff()
+    {
+        yield return new WaitForSeconds(4);
+        speed += 1;
+        if(speed > maxSpeed )
+        {
+            speed = maxSpeed;
+        }
+    }
+
 
     private void Death()
     {
