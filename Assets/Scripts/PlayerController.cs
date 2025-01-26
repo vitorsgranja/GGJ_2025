@@ -44,6 +44,7 @@ public class CharacterController2D : MonoBehaviour {
   private bool canUseJetpack = false;
   private bool isDashing = false;
   private bool canDash = true;
+  private bool invulnerability = false;
 
   private List<Queue<GameObject>> projectilePools = new List<Queue<GameObject>>();
 
@@ -150,6 +151,9 @@ public class CharacterController2D : MonoBehaviour {
     if(!isGrounded) {
       canUseJetpack = true;
     }
+  }  private IEnumerator ResetInvulnerabilityState() {
+    yield return new WaitForSeconds(1f);
+    invulnerability = false;
   }
 
   private void HandleShooting() {
@@ -302,11 +306,18 @@ public class CharacterController2D : MonoBehaviour {
 
   }
   public void AddLife(float life) {
-    currentHealth += life;
-    if(currentHealth > maxHealth) {
-      currentHealth = maxHealth;
-    } else if(currentHealth <= 0) {
-      Die();
+    if(!invulnerability || life > 0) {
+      currentHealth += life;
+      if(currentHealth > maxHealth) {
+        currentHealth = maxHealth;
+      } else if(currentHealth <= 0) {
+        Die();
+      }
+    }
+
+    if(life < 0) {
+      ResetInvulnerabilityState();
+      invulnerability = true;
     }
   }
   private void OnTriggerEnter2D(Collider2D collision) {
