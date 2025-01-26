@@ -8,7 +8,7 @@ public class FallingEnemySpawner : MonoBehaviour {
   public float spawnHeight = 10f; // Altura do spawn (de onde os inimigos vão cair)
 
   private void Start() {
-    InvokeRepeating(nameof(SpawnEnemy), 0f, 1f);
+    InvokeRepeating(nameof(SpawnEnemy), 0f, 3f);
   }
 
   /// <summary>

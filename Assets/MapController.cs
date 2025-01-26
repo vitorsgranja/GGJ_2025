@@ -3,13 +3,11 @@ using UnityEngine;
 
 public class MapController : MonoBehaviour
 {
-    private const float MAP_LIFE_SECONDS = 60f;
+    private const float MAP_LIFE_SECONDS = 120f;
 
     private const float MAP_SIZE_DIVIDER = 6;
     private const int MAP_BORDER_STEP = 314;
     private const float MAP_MIN_LIFE = 60f;
-    private const int MAX_TIME_UNTIL_NEXT_BUBBLE_SPAWNER = 20;
-    private const int MIN_TIME_UNTIL_NEXT_BUBBLE_SPAWNER = 5;
     private const float MAX_MAP_LIFE = 100f;
     private const float ASCENSION_SPEED = 0.003f;
 
@@ -17,16 +15,13 @@ public class MapController : MonoBehaviour
     public float mapLife = MAX_MAP_LIFE;
     public float time;
     public List<GameObject> gears = new();
-    public List<Vector3> bubbleSpawnPoints;
-
-    public Object bubbleSpawnerPrefab;
+    //public List<Vector3> bubbleSpawnPoints;
 
     private float timeRemaining = MAP_LIFE_SECONDS;
     private bool isAscending = false;
     private List<Vector2> colliderPath = new();
     public Camera cameraObject;
 
-    public float remainingTimeUntilNextBubbleSpawner;
     public LineCollision2 lineCollision;
     public GameObject enemySpawner;
 
@@ -34,12 +29,14 @@ public class MapController : MonoBehaviour
     private bool isBordersDrawn = false;
 
     private float lastDamageTime = -1f;
+    private bool ascensionComplete = false;
+
+    float maxY = 0f, maxX = 0f, minY = 0f, minX = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         DrawBorders();
-        SetRemainingTimeBubbleSpawner();
         sprite = GetComponentInChildren<SpriteRenderer>();
 
 
@@ -65,17 +62,7 @@ public class MapController : MonoBehaviour
             Ascend();
         }
 
-        if (remainingTimeUntilNextBubbleSpawner > 0f)
-		{
-            remainingTimeUntilNextBubbleSpawner -= Time.deltaTime;
-		}
-        else
-		{
-            SpawnBubbleSpawner();
-            SetRemainingTimeBubbleSpawner();
-		}
-
-        if (isAscending)
+        if (isAscending && !ascensionComplete)
 		{
             transform.position = new Vector3(transform.position.x, transform.position.y + ASCENSION_SPEED);
             enemySpawner.GetComponent<FallingEnemySpawner>().spawnHeight += ASCENSION_SPEED;
@@ -103,8 +90,6 @@ public class MapController : MonoBehaviour
         mapBorderLineRenderer.positionCount = MAP_BORDER_STEP + 1;
         int currentStep;
         Vector3 firstPosition = new Vector3(0, 0, 0);
-
-        float maxY = 0f, maxX = 0f, minY = 0f, minX = 0f;
 
         for (currentStep = 0; currentStep < MAP_BORDER_STEP; currentStep++)
 		{
@@ -195,16 +180,6 @@ public class MapController : MonoBehaviour
         return mapBorderLineRenderer.startWidth;
 	}
 
-    private void SpawnBubbleSpawner()
-	{
-        Instantiate(bubbleSpawnerPrefab, GetRandomSpawnPointOnFloor(), new Quaternion());
-    }
-
-    private void SetRemainingTimeBubbleSpawner()
-	{
-        remainingTimeUntilNextBubbleSpawner = Random.Range(MIN_TIME_UNTIL_NEXT_BUBBLE_SPAWNER, MAX_TIME_UNTIL_NEXT_BUBBLE_SPAWNER);
-    }
-
 	private void OnCollisionStay2D(Collision2D collision)
 	{
         CharacterController2D player;
@@ -221,4 +196,29 @@ public class MapController : MonoBehaviour
             lastDamageTime += Time.deltaTime;
         }
     }
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.name == "TriggerFinish")
+		{
+            ascensionComplete = true;
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+        if (collision.TryGetComponent<StickEnemy>(out var stick))
+        {
+            stick.GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+        if (collision.TryGetComponent<HookEnemy>(out var hook))
+        {
+            hook.GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+    }
+
+	public bool CheckInsideBubble(float x, float y)
+	{
+        return x > minX && x < maxX && y > minY && y < maxY;
+	}
 }

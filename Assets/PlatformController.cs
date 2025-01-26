@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlatformController : MonoBehaviour
 {
     public List<Sprite> platformTextures = new List<Sprite>();
+    public bool isInsideBubble = false;
 
     private SpriteRenderer spriteRenderer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,4 +20,9 @@ public class PlatformController : MonoBehaviour
     {
         
     }
+
+    public void ToggleInsideBubble()
+	{
+        isInsideBubble = !isInsideBubble;
+	}
 }

@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class BubbleSpawnController : MonoBehaviour
 {
-	private const float DELAY_START_SPAWN = 2;
+	private const float DELAY_START_SPAWN = 5;
 	private const float DELAY_BUBBLES_GENERATION = 3;
-	private const int MAX_BUBBLE_COUNT = 5;
 	private const float INITIAL_SCALE = 0.5f;
 
 	private float remainingTimeDelay = DELAY_START_SPAWN;
@@ -32,16 +31,13 @@ public class BubbleSpawnController : MonoBehaviour
 		}
 		else
 		{
-			if (currentBubbleCount < MAX_BUBBLE_COUNT)
+			if (remainingBubbleGenerationDelay > 0f)
 			{
-				if (remainingBubbleGenerationDelay > 0f)
-				{
-					remainingBubbleGenerationDelay -= Time.deltaTime;
-				}
-				else
-				{
-					GenerateBubbles();
-				}
+				remainingBubbleGenerationDelay -= Time.deltaTime;
+			}
+			else
+			{
+				GenerateBubbles();
 			}
 		}
 	}
@@ -49,13 +45,7 @@ public class BubbleSpawnController : MonoBehaviour
 	private void GenerateBubbles()
 	{
 		currentBubbleCount++;
-		// TODO: CREATE BUBBLE
 		Instantiate(bubblePrefab, transform.position, transform.rotation);
-		if (currentBubbleCount >= MAX_BUBBLE_COUNT)
-		{
-			// TODO: DESTROY ANIMATION
-			Destroy(gameObject);
-		}
 
 		remainingBubbleGenerationDelay = DELAY_BUBBLES_GENERATION;
 	}

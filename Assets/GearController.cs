@@ -54,6 +54,5 @@ public class GearController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         animator.SetBool("IsRoll", false);
-        GetComponent<BoxCollider>().enabled = true;
     }
 }
