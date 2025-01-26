@@ -1,9 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public class StickEnemy : MonoBehaviour
 {
     private Transform player;
     [SerializeField] private float speed;
+    [SerializeField] private float life;
     [SerializeField] private float jumpForce;
     [SerializeField] private LayerMask groundLayer;
 
@@ -11,8 +13,7 @@ public class StickEnemy : MonoBehaviour
     private bool isGrounded;
     private bool shouldJump;
 
-
-
+    bool canJump = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,11 +34,11 @@ public class StickEnemy : MonoBehaviour
         //player above direction
         bool isPlayerAbove = Physics2D.Raycast(transform.position, Vector2.up, 5f, 1 << player.gameObject.layer);
 
-        if(isGrounded)
+
+        if (isGrounded)
         {
             //chase player
             rb.linearVelocity = new Vector2(directrion * speed, rb.linearVelocity.y);
-
 
             RaycastHit2D groundInFront = Physics2D.Raycast(transform.position, new Vector2(directrion, 0), 2f, groundLayer);
 
@@ -45,11 +46,11 @@ public class StickEnemy : MonoBehaviour
 
             RaycastHit2D plataformAbove = Physics2D.Raycast(transform.position, Vector2.up, 5f, groundLayer);
 
-            if(!groundInFront.collider && !gapAhead.collider)
+            if (!groundInFront.collider && !gapAhead.collider)
             {
                 shouldJump = true;
             }
-            else if(isPlayerAbove && plataformAbove.collider)
+            else if (isPlayerAbove && plataformAbove.collider)
             {
                 shouldJump = true;
             }
@@ -58,14 +59,41 @@ public class StickEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(isGrounded && shouldJump)
+        if (isGrounded && shouldJump && canJump)
         {
-            shouldJump = false;
             Vector2 direction = (player.position - transform.position).normalized;
 
             Vector2 jumpDirection = direction * jumpForce;
 
             rb.AddForce(new Vector2(jumpDirection.x, jumpForce), ForceMode2D.Impulse);
+            canJump = false;
+            StartCoroutine("EnableJumpAfterDelay");
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isGrounded = false;
+    }
+    private IEnumerator EnableJumpAfterDelay()
+    {
+        yield return new WaitForSeconds(2.5f);
+        canJump = true;
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("PlayerBullet"))
+        {
+            //int playerProjectile = collision.GetComponent<PlayerProjectile>().weaponIndex;
+            //rb.gravityScale 
+        }
+    }
+
+    private void Death()
+    {
+        Debug.Log("Death");
+        this.gameObject.SetActive(false);
     }
 }
