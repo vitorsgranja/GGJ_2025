@@ -212,8 +212,8 @@ public class MapController : MonoBehaviour
 
             if (shouldDamagePlayer)
 			{
-                player.ConsumeHealth(5);
-                UpdateMapLife(5);
+                player.ConsumeHealth(10);
+                UpdateMapLife(1);
                 lastDamageTime = 0f;
             }
             lastDamageTime += Time.deltaTime;

@@ -14,7 +14,7 @@ public class PlayerProjectile : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!collision.CompareTag("Player"))
+        if(!collision.CompareTag("Player") && !collision.CompareTag("Ground"))
         {
             controller.ReturnProjectileToPool(gameObject,weaponIndex);
         }        
@@ -23,7 +23,7 @@ public class PlayerProjectile : MonoBehaviour {
 
   private void Update() {
     // Retorna o projétil se sair dos limites
-    if(Mathf.Abs(transform.position.x) > 50 || Mathf.Abs(transform.position.y) > 50) {
+    if(Mathf.Abs(transform.position.x) > 50 || Mathf.Abs(transform.position.y) > 200) {
       controller.ReturnProjectileToPool(gameObject,weaponIndex);
     }
   }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GearController : MonoBehaviour
@@ -8,10 +9,12 @@ public class GearController : MonoBehaviour
 
     private float gearCurrentLife = GEAR_MAX_LIFE;
 
+    private Animator animator;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -34,15 +37,19 @@ public class GearController : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
         // TODO: CHANGE TO CORRECT WAY
-        print("ontrigger " + collision);
-        if (collision.transform.parent.TryGetComponent<PlayerProjectile>(out _))
+        if (collision.transform.parent.TryGetComponent<PlayerProjectile>(out _) && !animator.GetBool("IsRoll"))
 		{
             DamageGear(1);
+            animator.SetBool("IsRoll", true);
+
+            StartCoroutine(nameof(CancelRoll));
 		}
 	}
 
-	private void OnCollisionEnter2D(Collision2D collision)
-	{
-        print("on collision");
+    private IEnumerator CancelRoll()
+    {
+        yield return new WaitForSeconds(1f);
+        animator.SetBool("IsRoll", false);
+        GetComponent<BoxCollider>().enabled = true;
     }
 }
