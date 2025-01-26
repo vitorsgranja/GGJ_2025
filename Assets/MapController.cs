@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class MapController : MonoBehaviour
 {
+    private const float MAP_LIFE_SECONDS = 20f;
     private const float MAP_SIZE_DIVIDER = 6;
     private const int MAP_BORDER_STEP = 314;
-    private const float MAP_LIFE_SECONDS = 15f;
     private const float MAP_MIN_LIFE = 50f;
     private const int VALVE_LIFE = 10;
     private const int MAX_TIME_UNTIL_NEXT_BUBBLE_SPAWNER = 20;
@@ -27,8 +27,10 @@ public class MapController : MonoBehaviour
     public Camera cameraObject;
 
     public float remainingTimeUntilNextBubbleSpawner;
+    public LineCollision lineCollision;
 
     private SpriteRenderer sprite = null;
+    private bool isBordersDrawn = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -127,13 +129,27 @@ public class MapController : MonoBehaviour
 
         mapBorderLineRenderer.SetPosition(currentStep, firstPosition + new Vector3(mapBorderLineRenderer.startWidth / 2, 0, 0));
 
-        if (sprite != null)
+        if (!isAscending)
         {
-            var currentSize = sprite.bounds.size.x;
-            var goalSize = mapBorderLineRenderer.bounds.size.x;
-            var newSpriteScale = goalSize / currentSize;
-            sprite.transform.localScale *= newSpriteScale+0.08f;
+            if (sprite != null)
+            {
+                var currentSize = sprite.bounds.size.x;
+
+                var goalSize = mapBorderLineRenderer.bounds.size.x;
+                var newSpriteScale = goalSize / currentSize;
+            
+                sprite.transform.localScale *= newSpriteScale+0.08f;
+
+                lineCollision.transform.localScale = new Vector3(mapLife / MAX_MAP_LIFE, mapLife / MAX_MAP_LIFE);
+            }
         }
+
+        if (!isBordersDrawn)
+		{
+            lineCollision.UpdateCollision();
+		}
+
+        isBordersDrawn = true;
     }
 
     void DamageValve()
