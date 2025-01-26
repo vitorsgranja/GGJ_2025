@@ -1175,7 +1175,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1330531590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f98cbcb6449acb34bb2430702bd7aa12, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a0d7cdff43762458911d818d031521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mapController: {fileID: 1330531593}

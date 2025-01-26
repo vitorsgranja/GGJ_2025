@@ -27,7 +27,7 @@ public class MapController : MonoBehaviour
     public Camera cameraObject;
 
     public float remainingTimeUntilNextBubbleSpawner;
-    public LineCollision lineCollision;
+    public LineCollision2 lineCollision;
 
     private SpriteRenderer sprite = null;
     private bool isBordersDrawn = false;
