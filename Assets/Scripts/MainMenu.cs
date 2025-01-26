@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour {
     Application.Quit();
   }
   public void ReturnToMenu() {
+    Time.timeScale = 1f;
     SceneManager.LoadScene("Menu");
   }
 }
