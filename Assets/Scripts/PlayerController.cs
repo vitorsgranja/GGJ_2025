@@ -295,6 +295,8 @@ public class CharacterController2D : MonoBehaviour {
   private void Die() {
     // Add logic for player death here
     Debug.Log("Player died.");
+    playerAnima.Play("Dead");
+    
   }
   public void AddLife(float life) {
     currentHealth += life;
