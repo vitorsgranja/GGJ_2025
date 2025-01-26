@@ -114,6 +114,11 @@ public class HookEnemy : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            player.GetComponent<CharacterController2D>().AddLife(-10);
+
+        }
     }
     private IEnumerator BubbleEffectOff()
     {
