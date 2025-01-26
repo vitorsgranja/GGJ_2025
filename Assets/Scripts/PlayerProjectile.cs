@@ -11,9 +11,15 @@ public class PlayerProjectile : MonoBehaviour {
     rb = GetComponent<Rigidbody2D>();
   }
 
-  private void OnCollisionEnter2D(Collision2D collision) {
-    controller.ReturnProjectileToPool(gameObject,weaponIndex);
-  }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(!collision.CompareTag("Player"))
+        {
+            controller.ReturnProjectileToPool(gameObject,weaponIndex);
+        }        
+    }
+
 
   private void Update() {
     // Retorna o projétil se sair dos limites
