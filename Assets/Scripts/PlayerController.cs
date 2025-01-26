@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,6 +45,9 @@ public class CharacterController2D : MonoBehaviour {
 
   private List<Queue<GameObject>> projectilePools = new List<Queue<GameObject>>();
 
+  [Header("Animation")]
+  private Animator playerAnima;
+  private bool IsMove;
   private void Start() {
     rb = GetComponent<Rigidbody2D>();
     spriteRenderer = GetComponent<SpriteRenderer>();
@@ -51,6 +55,8 @@ public class CharacterController2D : MonoBehaviour {
     UpdatePlayerSize();
     InitializeProjectilePools();
     UpdatePlayerColor();
+
+    playerAnima = GetComponent<Animator>();
   }
 
   private void Update() {
@@ -64,6 +70,8 @@ public class CharacterController2D : MonoBehaviour {
     HandleMouseFunctions();
     UpdatePlayerSize();
     UpdatePlayerColor();
+    playerAnima.SetFloat("xVelocity", Math.Abs (rb.linearVelocity.x));
+    playerAnima.SetFloat("yVelocity",rb.linearVelocity.y);
   }
 
   private void InitializeProjectilePools() {
@@ -100,10 +108,9 @@ public class CharacterController2D : MonoBehaviour {
   private void HandleMovement() {
     float moveInput = Input.GetAxis("Horizontal");
     rb.linearVelocity = new Vector2(moveInput * moveSpeed,rb.linearVelocity.y);
-
     if(moveInput != 0) {
       transform.localScale = new Vector3(Mathf.Sign(moveInput),1,1);
-    }
+    } 
   }
 
   private void HandleJumpAndJetpack() {
@@ -112,6 +119,7 @@ public class CharacterController2D : MonoBehaviour {
       isJumping = true;
       rb.linearVelocity = new Vector2(rb.linearVelocity.x,initialJumpForce);
       StartCoroutine(EnableJetpackAfterDelay());
+      playerAnima.SetBool("IsJump", !isGrounded);
     }
 
     if(isJumping) {
@@ -171,7 +179,7 @@ public class CharacterController2D : MonoBehaviour {
   }
 
   private void HandleDash() {
-    if(Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isDashing) {
+    if(Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isDashing && rb.linearVelocityX != 0) {
       StartCoroutine(PerformDash());
     }
   }
@@ -200,34 +208,34 @@ public class CharacterController2D : MonoBehaviour {
 
   #region MousePosition
   private void HandleMouseFunctions() {
-    // Captura a posição do mouse na tela
+    // Captura a posiï¿½ï¿½o do mouse na tela
     Vector3 mousePosition = Input.mousePosition;
-    mousePosition.z = 10f; // Ajuste a posição Z para um valor que esteja no plano 2D correto
-                           // Converte a posição do mouse para o espaço mundial
+    mousePosition.z = 10f; // Ajuste a posiï¿½ï¿½o Z para um valor que esteja no plano 2D correto
+                           // Converte a posiï¿½ï¿½o do mouse para o espaï¿½o mundial
     Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
     FirePointRotation(worldMousePosition);
     PlayerSpritFlipping(worldMousePosition);
   }
 
   private void FirePointRotation(Vector3 mousePos) {
-    // Calcula a direção entre o firePoint e o mouse
+    // Calcula a direï¿½ï¿½o entre o firePoint e o mouse
     Vector2 direction = (mousePos - firePoint.position).normalized;
-    // Calcula o ângulo da direção e aplica a rotação no firePoint
+    // Calcula o ï¿½ngulo da direï¿½ï¿½o e aplica a rotaï¿½ï¿½o no firePoint
     float angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
     firePoint.rotation = Quaternion.Euler(new Vector3(0,0,angle));
   }
 
   private void PlayerSpritFlipping(Vector3 mousePos) {
-    // Verifica a posição do mouse em relação ao firePoint (ou ao personagem)
+    // Verifica a posiï¿½ï¿½o do mouse em relaï¿½ï¿½o ao firePoint (ou ao personagem)
     if(mousePos.x < transform.position.x) {
-      // Se o mouse estiver à esquerda do personagem, inverte o sprite
+      // Se o mouse estiver ï¿½ esquerda do personagem, inverte o sprite
       spriteRenderer.flipX = true;
-      // Se o mouse estiver à esquerda do personagem, inverte o firePoint
+      // Se o mouse estiver ï¿½ esquerda do personagem, inverte o firePoint
       firePoint.transform.localPosition = new Vector3(-0.1f,0,0);
     } else {
-      // Se o mouse estiver à direita, o sprite não é invertido
+      // Se o mouse estiver ï¿½ direita, o sprite nï¿½o ï¿½ invertido
       spriteRenderer.flipX = false;
-      // Se o mouse estiver à esquerda do personagem, inverte o firePoint
+      // Se o mouse estiver ï¿½ esquerda do personagem, inverte o firePoint
       firePoint.transform.localPosition = new Vector3(0.1f,0,0);
 
     }
@@ -259,7 +267,14 @@ public class CharacterController2D : MonoBehaviour {
     // Add logic for player death here
     Debug.Log("Player died.");
   }
-
+  public void AddLife(float life) {
+    currentHealth += life;
+    if (currentHealth > maxHealth) {
+      currentHealth = maxHealth;
+    } else if(currentHealth <= 0) {
+      Die();
+    }
+  }
   private void OnTriggerEnter2D(Collider2D collision) {
     if(collision.CompareTag("Bubble")) {
       currentHealth += 10;
@@ -280,6 +295,7 @@ public class CharacterController2D : MonoBehaviour {
   private void OnCollisionStay2D(Collision2D collision) {
     if(collision.gameObject.CompareTag("Ground") && rb.linearVelocity.y <= 0) {
       isGrounded = true;
+      playerAnima.SetBool("IsJump", !isGrounded);
       canUseJetpack = false; // Disable jetpack when grounded
     }
   }
