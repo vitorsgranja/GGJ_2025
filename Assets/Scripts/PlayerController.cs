@@ -26,6 +26,11 @@ public class CharacterController2D : MonoBehaviour {
   public GameObject[] projectilePrefabs;
   public int poolSize = 10;
 
+  [Header("Dash Settings")]
+  public float dashSpeed = 15f;
+  public float dashDuration = 0.2f;
+  public float dashCooldown = 1f;
+
   private Rigidbody2D rb;
   private SpriteRenderer spriteRenderer;
   private float currentHealth;
@@ -34,6 +39,8 @@ public class CharacterController2D : MonoBehaviour {
   private int currentWeaponIndex = 0;
   private float secondaryWeaponAmmo = 0;
   private bool canUseJetpack = false;
+  private bool isDashing = false;
+  private bool canDash = true;
 
   private List<Queue<GameObject>> projectilePools = new List<Queue<GameObject>>();
 
@@ -47,10 +54,13 @@ public class CharacterController2D : MonoBehaviour {
   }
 
   private void Update() {
-    HandleMovement();
-    HandleJumpAndJetpack();
+    if(!isDashing) {
+      HandleMovement();
+      HandleJumpAndJetpack();
+    }
     HandleShooting();
     HandleWeaponSwitching();
+    HandleDash();
     HandleMouseFunctions();
     UpdatePlayerSize();
     UpdatePlayerColor();
@@ -160,28 +170,53 @@ public class CharacterController2D : MonoBehaviour {
     }
   }
 
+  private void HandleDash() {
+    if(Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isDashing) {
+      StartCoroutine(PerformDash());
+    }
+  }
+
+  private IEnumerator PerformDash() {
+    isDashing = true;
+    canDash = false;
+
+    float originalGravity = rb.gravityScale;
+    rb.gravityScale = 0; // Disable gravity during dash
+    Vector2 dashDirection = new Vector2(transform.localScale.x,0).normalized;
+
+    rb.linearVelocity = dashDirection * dashSpeed;
+    yield return new WaitForSeconds(dashDuration);
+
+    rb.gravityScale = originalGravity;
+    rb.linearVelocity = Vector2.zero;
+    isDashing = false;
+
+    yield return new WaitForSeconds(dashCooldown);
+    canDash = true;
+  }
+
+
+
+
   #region MousePosition
   private void HandleMouseFunctions() {
     // Captura a posição do mouse na tela
     Vector3 mousePosition = Input.mousePosition;
     mousePosition.z = 10f; // Ajuste a posição Z para um valor que esteja no plano 2D correto
-
-    // Converte a posição do mouse para o espaço mundial
+                           // Converte a posição do mouse para o espaço mundial
     Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-
     FirePointRotation(worldMousePosition);
     PlayerSpritFlipping(worldMousePosition);
   }
+
   private void FirePointRotation(Vector3 mousePos) {
     // Calcula a direção entre o firePoint e o mouse
     Vector2 direction = (mousePos - firePoint.position).normalized;
-
     // Calcula o ângulo da direção e aplica a rotação no firePoint
     float angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
     firePoint.rotation = Quaternion.Euler(new Vector3(0,0,angle));
-
   }
+
   private void PlayerSpritFlipping(Vector3 mousePos) {
     // Verifica a posição do mouse em relação ao firePoint (ou ao personagem)
     if(mousePos.x < transform.position.x) {
@@ -198,7 +233,6 @@ public class CharacterController2D : MonoBehaviour {
     }
   }
   #endregion
-
   private void ConsumeHealth(float amount) {
     currentHealth -= amount;
     currentHealth = Mathf.Clamp(currentHealth,0,maxHealth);
@@ -244,7 +278,7 @@ public class CharacterController2D : MonoBehaviour {
   }
 
   private void OnCollisionStay2D(Collision2D collision) {
-    if(collision.gameObject.CompareTag("Ground")) {
+    if(collision.gameObject.CompareTag("Ground") && rb.linearVelocity.y <= 0) {
       isGrounded = true;
       canUseJetpack = false; // Disable jetpack when grounded
     }
