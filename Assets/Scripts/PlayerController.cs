@@ -252,7 +252,7 @@ public class CharacterController2D : MonoBehaviour {
     }
   }
   #endregion
-  private void ConsumeHealth(float amount) {
+  public void ConsumeHealth(float amount) {
     currentHealth -= amount;
     currentHealth = Mathf.Clamp(currentHealth,0,maxHealth);
     if(currentHealth <= 0) {

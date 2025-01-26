@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class MapController : MonoBehaviour
 {
-    private const float MAP_LIFE_SECONDS = 20f;
+    private const float MAP_LIFE_SECONDS = 60f;
+
     private const float MAP_SIZE_DIVIDER = 6;
     private const int MAP_BORDER_STEP = 314;
     private const float MAP_MIN_LIFE = 60f;
@@ -31,6 +32,8 @@ public class MapController : MonoBehaviour
 
     private SpriteRenderer sprite = null;
     private bool isBordersDrawn = false;
+
+    private float lastDamageTime = -1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -68,7 +71,7 @@ public class MapController : MonoBehaviour
         if (isAscending)
 		{
             transform.position = new Vector3(transform.position.x, transform.position.y + ASCENSION_SPEED);
-			if (transform.position.y >= 9 && !TryGetComponent<Camera>(out _))
+			if (transform.position.y >= 9.7f && !TryGetComponent<Camera>(out _))
 			{
                 cameraObject.transform.parent = transform;
 			}
@@ -79,7 +82,7 @@ public class MapController : MonoBehaviour
 
     void UpdateMapLife(float value)
 	{
-        mapLife = Mathf.Max(MAP_MIN_LIFE, mapLife += value);
+        mapLife = Mathf.Clamp(mapLife + value, MAP_MIN_LIFE, isAscending ? 0.7f * MAX_MAP_LIFE : MAX_MAP_LIFE);
         DrawBorders();
 	}
 
@@ -129,19 +132,16 @@ public class MapController : MonoBehaviour
 
         mapBorderLineRenderer.SetPosition(currentStep, firstPosition + new Vector3(mapBorderLineRenderer.startWidth / 2, 0, 0));
 
-        if (!isAscending)
+        if (sprite != null)
         {
-            if (sprite != null)
-            {
-                var currentSize = sprite.bounds.size.x;
+            var currentSize = sprite.bounds.size.x;
 
-                var goalSize = mapBorderLineRenderer.bounds.size.x;
-                var newSpriteScale = goalSize / currentSize;
+            var goalSize = mapBorderLineRenderer.bounds.size.x;
+            var newSpriteScale = goalSize / currentSize;
             
-                sprite.transform.localScale *= newSpriteScale+0.08f;
+            sprite.transform.localScale *= newSpriteScale+0.08f;
 
-                lineCollision.transform.localScale = new Vector3(mapLife / MAX_MAP_LIFE, mapLife / MAX_MAP_LIFE);
-            }
+            lineCollision.transform.localScale = new Vector3(mapLife / MAX_MAP_LIFE, mapLife / MAX_MAP_LIFE);
         }
 
         if (!isBordersDrawn)
@@ -200,8 +200,20 @@ public class MapController : MonoBehaviour
         remainingTimeUntilNextBubbleSpawner = Random.Range(MIN_TIME_UNTIL_NEXT_BUBBLE_SPAWNER, MAX_TIME_UNTIL_NEXT_BUBBLE_SPAWNER);
     }
 
-	private void OnTriggerEnter2D(Collider2D collision)
+	private void OnCollisionStay2D(Collision2D collision)
 	{
-		// TODO: TREAT COLLISION
-	}
+        CharacterController2D player;
+        if (collision.gameObject.TryGetComponent(out player))
+        {
+            bool shouldDamagePlayer = lastDamageTime == -1f || lastDamageTime > 2f;
+
+            if (shouldDamagePlayer)
+			{
+                player.ConsumeHealth(5);
+                UpdateMapLife(5);
+                lastDamageTime = 0f;
+            }
+            lastDamageTime += Time.deltaTime;
+        }
+    }
 }
