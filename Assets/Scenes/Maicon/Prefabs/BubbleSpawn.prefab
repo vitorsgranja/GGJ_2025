@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentBubbleCount: 0
-  sprite: {fileID: 0}
   bubblePrefab: {fileID: 1224905406748237857, guid: 1c2a8287a99a81f49bed38d59caa9ced, type: 3}
 --- !u!212 &4311343934481791694
 SpriteRenderer:
@@ -91,7 +90,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_Sprite: {fileID: 2094335456, guid: 9a32f3937a62a984584003e551e9e657, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
