@@ -28,6 +28,7 @@ public class MapController : MonoBehaviour
 
     public float remainingTimeUntilNextBubbleSpawner;
     public LineCollision2 lineCollision;
+    public GameObject enemySpawner;
 
     private SpriteRenderer sprite = null;
     private bool isBordersDrawn = false;
@@ -77,6 +78,7 @@ public class MapController : MonoBehaviour
         if (isAscending)
 		{
             transform.position = new Vector3(transform.position.x, transform.position.y + ASCENSION_SPEED);
+            enemySpawner.GetComponent<FallingEnemySpawner>().spawnHeight += ASCENSION_SPEED;
 			if (transform.position.y >= 9.7f && !TryGetComponent<Camera>(out _))
 			{
                 cameraObject.transform.parent = transform;

@@ -11,10 +11,13 @@ public class GearController : MonoBehaviour
 
     private Animator animator;
 
+    private AudioManager audioManager;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         animator = GetComponent<Animator>();
+        audioManager = AudioManager.instance;
     }
 
     // Update is called once per frame
@@ -40,6 +43,7 @@ public class GearController : MonoBehaviour
         if (collision.transform.parent.TryGetComponent<PlayerProjectile>(out _) && !animator.GetBool("IsRoll"))
 		{
             DamageGear(1);
+            audioManager.PlaySound(audioManager.effectList[9]);
             animator.SetBool("IsRoll", true);
 
             StartCoroutine(nameof(CancelRoll));
