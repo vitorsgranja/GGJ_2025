@@ -37,7 +37,6 @@ public class StickEnemy : MonoBehaviour
         //player above direction
         bool isPlayerAbove = Physics2D.Raycast(transform.position, Vector2.up, 5f, 1 << player.gameObject.layer);
 
-
         if (isGrounded)
         {
             //chase player
@@ -131,7 +130,6 @@ public class StickEnemy : MonoBehaviour
             speed = maxSpeed;
         }
     }
-
 
     private void Death()
     {
