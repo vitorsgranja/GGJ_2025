@@ -2487,7 +2487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826474e269d154d4fbbd54c0ccadad9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Otavio
+  sceneToLoad: MapScene
   loadingScreen: {fileID: 1740295794}
   loadingBar: {fileID: 0}
   minimumLoadingTime: 2

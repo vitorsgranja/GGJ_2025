@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Branches/Otavio.unity
     guid: 14dac8761b6c007419ffd99a377b51b4
+  - enabled: 1
+    path: Assets/Scenes/Maicon/MapScene.unity
+    guid: 1f7e3a5c00fbed340acba7a5aac06338
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 6af218af5758aa243bf6275b88a79fff, type: 3}
   m_UseUCBPForAssetBundles: 0

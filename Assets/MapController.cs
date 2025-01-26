@@ -8,7 +8,6 @@ public class MapController : MonoBehaviour
     private const float MAP_SIZE_DIVIDER = 6;
     private const int MAP_BORDER_STEP = 314;
     private const float MAP_MIN_LIFE = 60f;
-    private const int VALVE_LIFE = 10;
     private const int MAX_TIME_UNTIL_NEXT_BUBBLE_SPAWNER = 20;
     private const int MIN_TIME_UNTIL_NEXT_BUBBLE_SPAWNER = 5;
     private const float MAX_MAP_LIFE = 100f;
@@ -17,14 +16,14 @@ public class MapController : MonoBehaviour
     public LineRenderer mapBorderLineRenderer;
     public float mapLife = MAX_MAP_LIFE;
     public float time;
-    public int currentValveLife = VALVE_LIFE;
+    public List<GameObject> gears = new();
     public List<Vector3> bubbleSpawnPoints;
 
     public Object bubbleSpawnerPrefab;
 
     private float timeRemaining = MAP_LIFE_SECONDS;
     private bool isAscending = false;
-    private List<Vector2> colliderPath = new List<Vector2>();
+    private List<Vector2> colliderPath = new();
     public Camera cameraObject;
 
     public float remainingTimeUntilNextBubbleSpawner;
@@ -41,12 +40,19 @@ public class MapController : MonoBehaviour
         DrawBorders();
         SetRemainingTimeBubbleSpawner();
         sprite = GetComponentInChildren<SpriteRenderer>();
+
+
+        foreach (var gear in FindObjectsByType<GearController>(FindObjectsSortMode.None))
+		{
+            gear.mapController = this;
+            gears.Add(gear.gameObject);
+		}
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timeRemaining > 0f)
+        if (timeRemaining > 0f && !isAscending)
         {
             var deltaTime = Time.deltaTime;
             timeRemaining -= deltaTime;
@@ -82,7 +88,7 @@ public class MapController : MonoBehaviour
 
     void UpdateMapLife(float value)
 	{
-        mapLife = Mathf.Clamp(mapLife + value, MAP_MIN_LIFE, isAscending ? 0.7f * MAX_MAP_LIFE : MAX_MAP_LIFE);
+        mapLife = Mathf.Clamp(mapLife + value, MAP_MIN_LIFE, isAscending && gears.Count > 0 ? 0.7f * MAX_MAP_LIFE : MAX_MAP_LIFE);
         DrawBorders();
 	}
 
@@ -152,13 +158,10 @@ public class MapController : MonoBehaviour
         isBordersDrawn = true;
     }
 
-    void DamageValve()
+    public void RemoveGear(GameObject gear)
 	{
-        currentValveLife--;
-        if (currentValveLife <= 0)
-		{
-            Ascend();
-		}
+        gears.Remove(gear);
+        if (gears.Count == 0) Ascend();
 	}
 
     private void Ascend()
