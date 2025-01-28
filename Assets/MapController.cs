@@ -1,9 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapController : MonoBehaviour
+public class MapController : BaseEnemyController
 {
-    private const float MAP_LIFE_SECONDS = 120f;
+    private const float MAP_DAMAGE = 10f;
+    private const float KNOCKBACK_FORCE = 30f;
+
+    public override float MeleeDamage => MAP_DAMAGE;
+    public override float KnockbackForce => KNOCKBACK_FORCE;
+
+    private const float MAP_LIFE_SECONDS = 300f;
 
     private const float MAP_SIZE_DIVIDER = 6;
     private const int MAP_BORDER_STEP = 314;
@@ -36,8 +42,9 @@ public class MapController : MonoBehaviour
     float maxY = 0f, maxX = 0f, minY = 0f, minX = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    override protected void Start()
     {
+        base.Start();
         DrawBorders();
         sprite = GetComponentInChildren<SpriteRenderer>();
 
@@ -156,7 +163,15 @@ public class MapController : MonoBehaviour
     private void Ascend()
 	{
         // Start bubble ascension
-        isAscending = true;
+        if (!isAscending)
+        {
+            isAscending = true;
+            Debug.Log("Camera size: " + cameraObject.orthographicSize + " /////  Bubble size: " + sprite.bounds.size.x);
+        }
+        if (cameraObject.orthographicSize < sprite.bounds.size.x * 0.6f)
+        {
+            cameraObject.orthographicSize += ASCENSION_SPEED;
+        }
     }
 
     private float GetRadius()
@@ -182,16 +197,16 @@ public class MapController : MonoBehaviour
         return mapBorderLineRenderer.startWidth;
 	}
 
-	private void OnCollisionStay2D(Collision2D collision)
+	override protected void OnCollisionStay2D(Collision2D collision)
 	{
         CharacterController2D player;
         if (collision.gameObject.TryGetComponent(out player))
         {
-            bool shouldDamagePlayer = lastDamageTime == -1f || lastDamageTime > 2f;
 
-            if (shouldDamagePlayer)
+            if (!player.invulnerability)
 			{
-                player.ConsumeHealth(10);
+                base.OnCollisionStay2D(collision);
+                //player.ConsumeHealth(10);
                 UpdateMapLife(1);
                 lastDamageTime = 0f;
             }
@@ -199,7 +214,7 @@ public class MapController : MonoBehaviour
         }
     }
 
-	private void OnTriggerEnter2D(Collider2D collision)
+	override protected void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.name == "TriggerFinish")
 		{

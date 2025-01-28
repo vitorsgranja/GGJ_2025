@@ -47,7 +47,7 @@ public class CharacterController2D : MonoBehaviour
 	private bool canUseJetpack = false;
 	private bool isDashing = false;
 	private bool canDash = true;
-	private bool invulnerability = false;
+	public bool invulnerability = false;
 
 	private Vector2? knockback = null;
 

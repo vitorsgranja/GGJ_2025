@@ -124,7 +124,7 @@ public class StickEnemy : BaseEnemyController
 
     private IEnumerator BubbleEffectOff()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(10);
         rb.gravityScale = 1f;
     }
     private IEnumerator SlowEffectOff()
