@@ -3,7 +3,7 @@ using UnityEngine;
 public class BubbleController : MonoBehaviour
 {
     private const int MAX_LIFE_TIME = 40;
-    private const float DY_MOVEMENT = 0.01f;
+    private const float DY_MOVEMENT = 0.1f;
     private const float VALUE = 10f;
 
     private float currentLifeTime = MAX_LIFE_TIME;
@@ -15,7 +15,7 @@ public class BubbleController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (currentLifeTime > 0f)
         {
@@ -34,7 +34,8 @@ public class BubbleController : MonoBehaviour
         CharacterController2D player;
         if (collision.TryGetComponent(out player))
 		{
-            //player.ConsumeHealth(-10);
+            player.AddLife(VALUE);
+            Destroy(gameObject);
         }
     }
 }

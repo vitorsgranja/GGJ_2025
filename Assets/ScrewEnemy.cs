@@ -1,28 +1,9 @@
 using UnityEngine;
 
-public class ScrewEnemy : MonoBehaviour
+public class ScrewEnemy : BaseEnemyController
 {
-    private Transform player;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.CompareTag(player.tag))
-		{
-            if (collision.TryGetComponent<CharacterController2D>(out var p))
-			{
-                p.AddLife(-10f);
-			}
-		}
-	}
+	private const float SCREW_DAMAGE = 10f;
+	private const float KNOCKBACK_FORCE = 20f;
+	public override float MeleeDamage => SCREW_DAMAGE;
+	public override float KnockbackForce => KNOCKBACK_FORCE;
 }

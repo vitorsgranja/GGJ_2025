@@ -28,7 +28,6 @@ public class GearController : MonoBehaviour
 
     private void DamageGear(float damage)
 	{
-        print("Damage gear");
         gearCurrentLife -= damage;
         if (gearCurrentLife <= 0f)
 		{
@@ -39,8 +38,7 @@ public class GearController : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-        // TODO: CHANGE TO CORRECT WAY
-        if (collision.transform.parent.TryGetComponent<PlayerProjectile>(out _) && !animator.GetBool("IsRoll"))
+        if (collision.transform.parent != null && collision.transform.parent.TryGetComponent<PlayerProjectile>(out _) && !animator.GetBool("IsRoll"))
 		{
             DamageGear(1);
             audioManager.PlaySound(audioManager.effectList[9]);

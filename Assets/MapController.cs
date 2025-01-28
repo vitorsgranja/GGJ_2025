@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ public class MapController : MonoBehaviour
     private const int MAP_BORDER_STEP = 314;
     private const float MAP_MIN_LIFE = 60f;
     private const float MAX_MAP_LIFE = 100f;
-    private const float ASCENSION_SPEED = 0.003f;
+    private const float ASCENSION_SPEED = 0.03f;
 
     public LineRenderer mapBorderLineRenderer;
     public float mapLife = MAX_MAP_LIFE;
@@ -51,7 +50,7 @@ public class MapController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         if (timeRemaining > 0f && !isAscending)
         {

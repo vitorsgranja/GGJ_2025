@@ -91,7 +91,6 @@ namespace PanelController
             {
                 foreach (GameObject p in childPanels)
                 {
-                    Debug.Log(p);
                     p.SetActive(false);
                 }
             }
@@ -185,7 +184,6 @@ namespace PanelController
                 {
                     GetComponent<PlayerInput>().enabled = false;
                     transform.parent.GetComponent<PlayerInput>().enabled = true;
-                    Debug.Log(gameObject);
                     gameObject.SetActive(false);
                 }
                 else

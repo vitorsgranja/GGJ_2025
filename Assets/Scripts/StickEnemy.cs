@@ -2,9 +2,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class StickEnemy : MonoBehaviour
+public class StickEnemy : BaseEnemyController
 {
-    private Transform player;
+    private const float STICK_DAMAGE = 5f;
+    private const float KNOCKBACK_FORCE = 15f;
+    public override float MeleeDamage => STICK_DAMAGE;
+    public override float KnockbackForce => KNOCKBACK_FORCE;
+
     [SerializeField] private float speed;
     [SerializeField] private float life;
     [SerializeField] private float jumpForce;
@@ -19,22 +23,21 @@ public class StickEnemy : MonoBehaviour
     float maxSpeed = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    override protected void Start()
     {
+        base.Start();
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         maxSpeed = speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(""+player);
         //is grounded?
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 1f, groundLayer);
 
         //player direction
-        float directrion = Mathf.Sign(player.position.x - transform.position.x);
+        float direction = Mathf.Sign(player.position.x - transform.position.x);
 
         //player above direction
         bool isPlayerAbove = Physics2D.Raycast(transform.position, Vector2.up, 5f, 1 << player.gameObject.layer);
@@ -42,11 +45,11 @@ public class StickEnemy : MonoBehaviour
         if (isGrounded)
         {
             //chase player
-            rb.linearVelocity = new Vector2(directrion * speed, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(direction * speed, rb.linearVelocity.y);
 
-            RaycastHit2D groundInFront = Physics2D.Raycast(transform.position, new Vector2(directrion, 0), 2f, groundLayer);
+            RaycastHit2D groundInFront = Physics2D.Raycast(transform.position, new Vector2(direction, 0), 2f, groundLayer);
 
-            RaycastHit2D gapAhead = Physics2D.Raycast(transform.position + new Vector3(directrion, 0, 0), Vector2.down, 2f, groundLayer);
+            RaycastHit2D gapAhead = Physics2D.Raycast(transform.position + new Vector3(direction, 0, 0), Vector2.down, 2f, groundLayer);
 
             RaycastHit2D plataformAbove = Physics2D.Raycast(transform.position, Vector2.up, 5f, groundLayer);
 
@@ -86,8 +89,9 @@ public class StickEnemy : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    override protected void OnTriggerEnter2D(Collider2D collision)
     {
+        base.OnTriggerEnter2D(collision);
         if (collision.CompareTag("PlayerBullet"))
         {
             int playerProjectile = collision.transform.parent.GetComponent<PlayerProjectile>().weaponIndex;
@@ -115,17 +119,13 @@ public class StickEnemy : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         }
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            player.GetComponent<CharacterController2D>().AddLife(-5);
-        }
 
     }
 
     private IEnumerator BubbleEffectOff()
     {
         yield return new WaitForSeconds(4);
-        rb.gravityScale += 0.3f;
+        rb.gravityScale = 1f;
     }
     private IEnumerator SlowEffectOff()
     {

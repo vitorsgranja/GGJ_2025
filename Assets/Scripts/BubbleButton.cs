@@ -48,6 +48,6 @@ public class BubbleButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnClick()
     {
-        Debug.Log("Button clicked");
+        
     }
 } 

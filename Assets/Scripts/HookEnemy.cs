@@ -1,18 +1,20 @@
-using System.Text.RegularExpressions;
-using System;
 using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
 
-public class HookEnemy : MonoBehaviour
+public class HookEnemy : BaseEnemyController
 {
+    private const float HOOK_DAMAGE = 5f;
+    private const float KNOCKBACK_FORCE = 15f;
+
+    public override float MeleeDamage => HOOK_DAMAGE;
+    public override float KnockbackForce => KNOCKBACK_FORCE;
+
     [SerializeField] private float life;
     [SerializeField] private float attackDistance = 0;
     [SerializeField] private float attackCooldown;
 
     private Rigidbody2D rb;
     private Vector2 direction;
-    private GameObject player;
     private Animator HookAnima;
 
     private BoidController boid;
@@ -24,10 +26,10 @@ public class HookEnemy : MonoBehaviour
     private SpriteRenderer sprite;
     private Vector2 playerPosition;
     private AudioManager audioManager;
-    private void Start()
+    override protected void Start()
     {
+        base.Start();
         audioManager = AudioManager.instance;
-        player = GameObject.FindGameObjectWithTag("Player");
         rb = this.GetComponent<Rigidbody2D>();
         boid = GetComponent<BoidController>();
         HookAnima = GetComponent<Animator>();
@@ -37,8 +39,8 @@ public class HookEnemy : MonoBehaviour
     }
     private void Update()
     {
-        distancePlayer = Vector2.Distance(transform.position, player.transform.position);
-        playerPosition = player.transform.position - transform.position;
+        distancePlayer = Vector2.Distance(transform.position, player.position);
+        playerPosition = player.position - transform.position;
 
         if (distancePlayer > attackDistance)
         {
@@ -85,8 +87,9 @@ public class HookEnemy : MonoBehaviour
         isAttacking = false;
         tempTimer = attackCooldown;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    override protected void OnTriggerEnter2D(Collider2D collision)
     {
+        base.OnTriggerEnter2D(collision);
         if (collision.CompareTag("PlayerBullet"))
         {
             int playerProjectile = collision.transform.parent.GetComponent<PlayerProjectile>().weaponIndex;

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8905032928033519351}
   - component: {fileID: 4471912559782470324}
   - component: {fileID: -5625741936952738634}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ancora
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.09981227, y: -0.028490543}
+  m_Offset: {x: -0.18540621, y: -1.1656632}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -135,7 +135,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 5.1306005, y: 10.230744}
+  m_Size: {x: 4.66595, y: 6.8314543}
   m_EdgeRadius: 0
 --- !u!50 &8905032928033519351
 Rigidbody2D:

@@ -76,7 +76,6 @@ public class BubbleLoadingEffect : MonoBehaviour
     [ContextMenu("Start Debug Loading")]
     public void StartDebugLoading()
     {
-        Debug.Log("Iniciando Loading de Debug");
         ResetLoading();
         isAnimating = true;
         StartCoroutine(SpawnMiniBubbles());
@@ -86,7 +85,6 @@ public class BubbleLoadingEffect : MonoBehaviour
     [ContextMenu("Reset Loading")]
     public void ResetLoading()
     {
-        Debug.Log("Resetando Loading");
         StopAllCoroutines();
         isAnimating = false;
         displayedProgress = 0f;
@@ -116,14 +114,12 @@ public class BubbleLoadingEffect : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Loading Simulado Completo!");
         yield return new WaitForSeconds(1f);
         isAnimating = false;
     }
 
     private IEnumerator SpawnMiniBubbles()
     {
-        Debug.Log("Iniciando spawn de bolhas");
         while (isAnimating)
         {
             SpawnMiniBubble();
@@ -170,7 +166,6 @@ public class BubbleLoadingEffect : MonoBehaviour
     {
         totalProgress = Mathf.Clamp01(progress);
         targetSize = Mathf.Lerp(minSize, maxSize, totalProgress);
-        Debug.Log($"Progress atualizado: {totalProgress * 100f}%");
     }
 
     private void UpdateLoadingText(float progress)
@@ -200,7 +195,6 @@ public class BubbleLoadingEffect : MonoBehaviour
 
     public void StopBubbleAnimation()
     {
-        Debug.Log("Parando animação das bolhas");
         isAnimating = false;
         StopAllCoroutines();
         
@@ -216,10 +210,8 @@ public class BubbleLoadingEffect : MonoBehaviour
 
     public void StartBubbleAnimation()
     {
-        Debug.Log("Iniciando animação das bolhas");
         if (!IsSetupValid())
         {
-            Debug.LogError("Setup não está válido para iniciar animação!");
             return;
         }
 
@@ -267,8 +259,6 @@ public class BubbleLoadingEffect : MonoBehaviour
         
         SetBubbleSize(currentSize);
         UpdateLoadingText(displayedProgress);
-        
-        Debug.Log($"Progresso atual: {displayedProgress * 100f}%, Tamanho: {currentSize}");
     }
 }
 
