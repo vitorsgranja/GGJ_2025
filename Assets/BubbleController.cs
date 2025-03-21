@@ -4,7 +4,7 @@ public class BubbleController : MonoBehaviour
 {
     private const int MAX_LIFE_TIME = 40;
     private const float DY_MOVEMENT = 0.1f;
-    private const float VALUE = 10f;
+    private const float VALUE = 20f;
 
     private float currentLifeTime = MAX_LIFE_TIME;
 

@@ -178,7 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   life: 0
-  jumpForce: 10
+  jumpForce: 7.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

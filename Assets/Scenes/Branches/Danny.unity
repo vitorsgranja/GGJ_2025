@@ -356,6 +356,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3568648451246433685, guid: 71aac15b860e2f540941d5c60bdb5c59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3770254466624539682, guid: 71aac15b860e2f540941d5c60bdb5c59, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 3770254466624539682, guid: 71aac15b860e2f540941d5c60bdb5c59, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.34
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1989,6 +2001,10 @@ PrefabInstance:
     - target: {fileID: 5955865745165660801, guid: c204fd022db93b54589978a4bdeab24c, type: 3}
       propertyPath: m_Name
       value: HookEnemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955865745165660801, guid: c204fd022db93b54589978a4bdeab24c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6706789288405925666, guid: c204fd022db93b54589978a4bdeab24c, type: 3}
       propertyPath: m_LocalPosition.x
